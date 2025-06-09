@@ -38,7 +38,7 @@ function Index() {
 
       <div
         className={cn(
-          "grid max-h-[calc(100svh-11rem)] overflow-y-auto px-6 max-lg:px-0 md:max-h-[calc(100svh-16rem)] lg:min-h-[calc(100svh-8rem)]",
+          "grid max-h-[calc(100svh-11rem)] px-6 max-lg:px-0 md:max-h-[calc(100svh-16rem)] lg:min-h-[calc(100svh-8rem)]",
           !isLoading && "lg:place-content-center",
         )}
       >
