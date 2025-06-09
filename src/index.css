@@ -238,6 +238,6 @@
     @apply bg-background text-foreground font-outfit font-extralight;
   }
   button {
-    @apply transition-all duration-300 active:scale-[0.98];
+    @apply cursor-pointer transition-all duration-300 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
   }
 }

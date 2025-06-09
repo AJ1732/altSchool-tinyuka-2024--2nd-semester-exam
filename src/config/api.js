@@ -1,8 +1,11 @@
 import axios from "@/lib/axios";
 
-export const fetchTodos = async () => {
+export const fetchTodos = async (page, limit) => {
   try {
-    const response = await axios.get("/todos");
+    const response = await axios.get("/todos", {
+      params: { _page: page, _limit: limit },
+    });
+    console.log("Todo response: ", response);
     return response.data;
   } catch (error) {
     console.error(error);

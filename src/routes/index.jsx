@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { Plus } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
-import { TodoList, TodoSkeleton } from "@/components/todos";
+import { TodoList, TodoPagination, TodoSkeleton } from "@/components/todos";
 import { useTodos } from "@/config/queries";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +12,11 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { data: todos, isLoading, isError } = useTodos();
+  const limit = 10;
+  const totalPages = 20;
+  const [page, setPage] = useState(1);
+
+  const { data: todos, isLoading, isError, isFetching } = useTodos(page, limit);
 
   if (isError) return <p>Error loading todos.</p>;
 
@@ -43,10 +48,8 @@ function Index() {
           <>
             {/* TODO LIST */}
             <TodoList todos={todos} />
-
-            <div className="mx-auto w-full max-w-[calc(100%-6rem)] rounded-full border border-zinc-100 bg-zinc-100/90 p-4 py-2 backdrop-blur-sm lg:absolute lg:bottom-6 lg:left-6 lg:max-w-80">
-              Pagination
-            </div>
+            {/* TODO PAGINATION */}
+            <TodoPagination {...{ page, totalPages, isFetching, setPage }} />
           </>
         )}
       </div>
