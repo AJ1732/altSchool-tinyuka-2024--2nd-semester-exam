@@ -1,6 +1,6 @@
 import { ChevronLeft } from "lucide-react";
 
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { useTodoID, useUserName } from "@/config/queries";
 import { cn } from "@/lib/utils";
@@ -10,7 +10,6 @@ export const Route = createFileRoute("/todos/$id")({
 });
 
 function RouteComponent() {
-  const navigate = useNavigate();
   const { id } = Route.useParams();
 
   const { data: todo, isLoading: todoLoading, error } = useTodoID(id);
@@ -19,12 +18,7 @@ function RouteComponent() {
   if (todoLoading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  const { userId, id: todoId, title, completed } = todo;
-
-  console.log("Todo user:", userId);
-  console.log("Todo ID:", todoId);
-  console.log("Todo title:", title);
-  console.log("Todo status:", completed);
+  const { id: todoId, title, completed } = todo;
 
   return (
     <div className="space-y-8">
@@ -38,12 +32,13 @@ function RouteComponent() {
             <div aria-hidden className="bg-avocado-600 size-2 rounded-full" />
             For {userLoading ? <span>Loading...</span> : <>{userName}</>}
           </h3>
-          <button
-            onClick={() => navigate("/")}
+          <Link
+            from={`/todos/${id}`}
+            to={"/"}
             className="bg-avocado-400 absolute top-0 right-0 flex aspect-square cursor-pointer items-center justify-center rounded-full p-2"
           >
             <ChevronLeft />
-          </button>
+          </Link>
         </div>
 
         <div

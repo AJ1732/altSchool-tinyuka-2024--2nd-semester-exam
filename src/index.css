@@ -184,11 +184,10 @@
 }
 
 @utility y-gradient {
-  /* .y-gradient { */
   -webkit-mask-image: linear-gradient(
     to bottom,
     rgba(24, 24, 27, 0),
-    rgba(24, 24, 27, 1) 10%,
+    rgba(24, 24, 27, 1) 5%,
     rgba(24, 24, 27, 1) 90%,
     rgba(24, 24, 27, 0)
   );
@@ -196,11 +195,10 @@
   mask-image: linear-gradient(
     to bottom,
     rgba(24, 24, 27, 0),
-    rgba(24, 24, 27, 1) 10%,
+    rgba(24, 24, 27, 1) 5%,
     rgba(24, 24, 27, 1) 90%,
     rgba(24, 24, 27, 0)
   );
-  /* } */
 }
 
 /* SCROLLBAR */

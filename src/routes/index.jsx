@@ -2,8 +2,9 @@ import { Plus } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
-import { TodoList } from "@/components/todos";
+import { TodoList, TodoSkeleton } from "@/components/todos";
 import { useTodos } from "@/config/queries";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -30,18 +31,25 @@ function Index() {
         </Button>
       </div>
 
-      {isLoading ? (
-        <p>Loading</p>
-      ) : (
-        <div className="grid max-h-[calc(100svh-11rem)] px-6 max-lg:px-0 md:max-h-[calc(100svh-16rem)] lg:min-h-[calc(100svh-8rem)] lg:place-content-center">
-          {/* TODO LIST */}
-          <TodoList todos={todos} />
+      <div
+        className={cn(
+          "grid max-h-[calc(100svh-11rem)] px-6 max-lg:px-0 md:max-h-[calc(100svh-16rem)] lg:min-h-[calc(100svh-8rem)]",
+          !isLoading && "lg:place-content-center",
+        )}
+      >
+        {isLoading ? (
+          <TodoSkeleton />
+        ) : (
+          <>
+            {/* TODO LIST */}
+            <TodoList todos={todos} />
 
-          <div className="mx-auto w-full max-w-[calc(100%-6rem)] rounded-full border border-zinc-100 bg-zinc-100/90 p-4 py-2 backdrop-blur-sm lg:absolute lg:bottom-6 lg:left-6 lg:max-w-80">
-            Pagination
-          </div>
-        </div>
-      )}
+            <div className="mx-auto w-full max-w-[calc(100%-6rem)] rounded-full border border-zinc-100 bg-zinc-100/90 p-4 py-2 backdrop-blur-sm lg:absolute lg:bottom-6 lg:left-6 lg:max-w-80">
+              Pagination
+            </div>
+          </>
+        )}
+      </div>
     </section>
   );
 }

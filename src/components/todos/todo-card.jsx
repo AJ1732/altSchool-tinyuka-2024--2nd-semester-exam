@@ -6,6 +6,12 @@ import { cn } from "@/lib/utils";
 
 import { Checkbox } from "../ui/checkbox";
 
+// const STATUS = {
+//   "todo": "bg-red-500",
+//   "in-progress": "bg-amber-500",
+//   "completed": "bg-green-500",
+// }
+
 export default function TodoCard({
   id = 1,
   title = "Complete Todo",
