@@ -2,7 +2,7 @@ import { Skeleton } from "../ui/skeleton";
 
 export default function TodoSkeleton() {
   return (
-    <ul className="mx-auto flex size-full max-w-lg flex-col justify-center divide-y overflow-hidden">
+    <ul className="mx-auto flex size-full max-w-lg flex-col justify-center divide-y">
       {[1, 2, 3, 4, 5, 6, 7].map((item) => (
         <li
           key={item}
