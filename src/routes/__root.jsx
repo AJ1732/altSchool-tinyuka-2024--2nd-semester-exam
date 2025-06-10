@@ -1,3 +1,4 @@
+import { Toaster } from "sonner";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 // import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
@@ -6,7 +7,7 @@ import { NotFound } from "@/components/shared";
 
 export const Route = createRootRoute({
   component: () => (
-    <div>
+    <>
       <main className="content-grid mt-4 min-h-[calc(100dvh-4rem)]">
         <div className="bg-neutral-background/60 size-full rounded-lg p-4">
           <Outlet />
@@ -14,8 +15,9 @@ export const Route = createRootRoute({
       </main>
 
       <Footer />
+      <Toaster />
       {/* <TanStackRouterDevtools /> */}
-    </div>
+    </>
   ),
   notFoundComponent: () => {
     return <NotFound />;

@@ -27,11 +27,12 @@ export function AddTodoFormContent({ onClose }) {
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: { title: "", owner: "" },
-    mode: "onTouched",
-    reValidateMode: "onChange",
+    // mode: "onTouched",
+    // reValidateMode: "onChange",
   });
 
   function onSubmit(data) {
+    onClose();
     toast("You submitted the following values", {
       description: (
         <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
