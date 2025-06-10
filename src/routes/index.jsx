@@ -3,7 +3,12 @@ import { Plus } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
-import { TodoList, TodoPagination, TodoSkeleton } from "@/components/todos";
+import {
+  AddTodoFormTrigger,
+  TodoList,
+  TodoPagination,
+  TodoSkeleton,
+} from "@/components/todos";
 import { useTodos } from "@/config/queries";
 import { cn } from "@/lib/utils";
 
@@ -30,10 +35,12 @@ function Index() {
           </h1>
         </header>
 
-        <Button className="size-fit gap-1 max-lg:px-3">
-          <span className="max-lg:sr-only">Add Todo</span>
-          <Plus className="size-5" />
-        </Button>
+        <AddTodoFormTrigger>
+          <Button className="size-fit gap-1 max-lg:px-3">
+            <span className="max-lg:sr-only">Add Todo</span>
+            <Plus className="size-5" />
+          </Button>
+        </AddTodoFormTrigger>
       </div>
 
       <div
