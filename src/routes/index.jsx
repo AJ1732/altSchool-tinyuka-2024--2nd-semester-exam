@@ -8,6 +8,7 @@ import {
   TodoList,
   TodoPagination,
   TodoSkeleton,
+  TodoFilterControls,
 } from "@/components/todos";
 import { useTodos } from "@/config/queries";
 import { cn } from "@/lib/utils";
@@ -27,7 +28,7 @@ function Index() {
 
   return (
     <section className="relative grid lg:grid-cols-[24rem_1fr]">
-      <div className="flex h-fit justify-between gap-2 py-6 pt-4 md:flex-col md:space-y-4 lg:pl-4">
+      <div className="flex h-fit justify-between gap-2 py-6 pt-4 max-lg:items-center md:space-y-4 lg:flex-col lg:px-4">
         <header>
           <h1 className="text-3xl md:text-5xl lg:text-6xl">
             Users <br className="max-lg:hidden" /> Todo List
@@ -36,11 +37,15 @@ function Index() {
         </header>
 
         <AddTodoFormTrigger>
-          <Button className="size-fit gap-1 max-lg:px-3">
+          <Button className="size-fit gap-1 max-lg:ml-auto max-lg:!px-2">
             <span className="max-lg:sr-only">Add Todo</span>
             <Plus className="size-5" />
           </Button>
         </AddTodoFormTrigger>
+
+        
+
+        <TodoFilterControls />
       </div>
 
       <div
