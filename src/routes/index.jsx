@@ -22,9 +22,9 @@ function Index() {
   const totalPages = 20;
   const [page, setPage] = useState(1);
 
-  const { data: todos, isLoading, isError, isFetching } = useTodos(page, limit);
+  const { data: todos, isLoading, error, isFetching } = useTodos(page, limit);
 
-  if (isError) return <p>Error loading todos.</p>;
+  if (error) throw new Error(error);
 
   return (
     <section className="relative grid lg:grid-cols-[24rem_1fr]">

@@ -1,6 +1,8 @@
 import { TodoCard } from "@/components/todos";
 
 export default function TodoList({ todos }) {
+  if (!todos) throw new Error("No Todo present");
+
   return (
     <ul className="no-scrollbar y-gradient size-full max-h-[calc(100svh-8rem)] overflow-y-auto pb-4 max-lg:mb-4 max-lg:pt-0 lg:max-h-[calc(100svh-8rem)] lg:py-4">
       {todos.map((todo) => (

@@ -49,7 +49,7 @@ export function SearchTodoForm() {
                 <Input
                   {...field}
                   placeholder="Search Todos..."
-                  className="border-avocado-500 w-full rounded-full border pr-10 shadow-2xs data-[placeholder]:text-base"
+                  className="w-full rounded-full border pr-10 shadow-2xs data-[placeholder]:text-base"
                 />
               </FormControl>
             </FormItem>

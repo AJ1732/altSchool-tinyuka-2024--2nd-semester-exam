@@ -5,6 +5,7 @@ import { useUserName } from "@/config/queries";
 import { cn } from "@/lib/utils";
 
 import { Checkbox } from "../ui/checkbox";
+import { toast } from "sonner";
 
 // const STATUS = {
 //   "todo": "bg-red-500",
@@ -19,6 +20,26 @@ export default function TodoCard({
   completed = false,
 }) {
   const { data: userName, isLoading } = useUserName(userId);
+
+  function simulateDelete(id) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (Math.random() < 0.3) {
+          reject(new Error("Network error"));
+        } else {
+          resolve(id);
+        }
+      }, 5000);
+    });
+  }
+
+  const handleDelete = () => {
+    toast.promise(simulateDelete(id), {
+      loading: `Deleting todo ${id}...`,
+      success: () => `Deleted Todo ${id}`,
+      error: (err) => `Failed to delete Todo ${id}: ${err.message}`,
+    });
+  };
 
   return (
     <li className="hover:bg-avocado-200/50 group relative flex items-center border-zinc-200 last:border-b-0 md:border-b last:[&>*]:border-b-0">
@@ -51,7 +72,10 @@ export default function TodoCard({
           />
 
           {/* MOBILE BUTTON */}
-          <button className="cursor-pointer rounded lg:hidden">
+          <button
+            onClick={handleDelete}
+            className="cursor-pointer rounded lg:hidden"
+          >
             <Trash2 className="size-[1.125rem] stroke-red-500/80" />
           </button>
         </div>
@@ -59,6 +83,7 @@ export default function TodoCard({
 
       {/* DESKTOP BUTTON */}
       <button
+        onClick={handleDelete}
         className={cn(
           "pointer-events-none absolute right-2 -z-[1] grid size-8 cursor-pointer place-content-center rounded-full bg-red-50 opacity-0 transition-all duration-500 max-lg:hidden",
           "group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:z-0 group-hover:opacity-100",
