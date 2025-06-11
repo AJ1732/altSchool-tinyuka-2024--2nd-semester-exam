@@ -5,7 +5,6 @@ export const fetchTodos = async (page, limit) => {
     const response = await axios.get("/todos", {
       params: { _page: page, _limit: limit },
     });
-    console.log("Todo response: ", response);
     return response.data;
   } catch (error) {
     console.error(error);

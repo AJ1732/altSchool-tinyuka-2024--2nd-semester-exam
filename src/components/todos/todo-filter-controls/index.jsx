@@ -17,10 +17,10 @@ import { SearchTodoForm } from "./search-todo-form";
 import { StatusTodoToggleGroup } from "./status-todo-toggle";
 
 export default function TodoFilterControls() {
-  const isDesktop = useIsDesktop(768);
+  const isDesktop = useIsDesktop();
 
   return isDesktop ? (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <header>
         <h3 className="font-semibold">Todo List Controls</h3>
         <p className="text-muted-foreground text-sm">
@@ -39,11 +39,11 @@ export default function TodoFilterControls() {
   ) : (
     <Drawer>
       <DrawerTrigger asChild>
-        <Button size={"icon"} className={"lg:hidden"}>
+        <Button size={"icon"}>
           <EllipsisVertical />
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className={"pb-4"}>
         <DrawerHeader>
           <DrawerTitle>Todo List Controls</DrawerTitle>
           <DrawerDescription>

@@ -28,7 +28,7 @@ function Index() {
 
   return (
     <section className="relative grid lg:grid-cols-[24rem_1fr]">
-      <div className="flex h-fit justify-between gap-2 py-6 pt-4 max-lg:items-center md:space-y-4 lg:flex-col lg:px-4">
+      <div className="flex h-fit justify-between gap-2 py-6 pt-4 max-lg:items-center lg:flex-col lg:space-y-4 lg:px-4">
         <header>
           <h1 className="text-3xl md:text-5xl lg:text-6xl">
             Users <br className="max-lg:hidden" /> Todo List
@@ -43,14 +43,12 @@ function Index() {
           </Button>
         </AddTodoFormTrigger>
 
-        
-
         <TodoFilterControls />
       </div>
 
       <div
         className={cn(
-          "grid max-h-[calc(100svh-11rem)] px-6 max-lg:px-0 md:max-h-[calc(100svh-16rem)] lg:min-h-[calc(100svh-6rem)]",
+          "grid max-h-[calc(100svh-11rem)] px-6 max-lg:px-0 md:max-h-[calc(100svh-12rem)] lg:min-h-[calc(100svh-6rem)]",
           !isLoading && "lg:place-content-center",
         )}
       >
