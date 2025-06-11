@@ -11,9 +11,9 @@ const __dirname = path.dirname(__filename);
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    TanStackRouterVite({ target: "react", autoCodeSplitting: true }),
     react(),
     tailwindcss(),
-    TanStackRouterVite({ target: "react", autoCodeSplitting: true }),
   ],
   resolve: {
     alias: {
