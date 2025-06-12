@@ -1,17 +1,15 @@
 import { Trash2 } from "lucide-react";
+import { toast } from "sonner";
+
 import { Link } from "@tanstack/react-router";
 
-import { useUserName } from "@/config/queries";
+import {
+  // useToggleTodoStatus,
+  useUserName,
+} from "@/config/queries";
 import { cn } from "@/lib/utils";
 
 import { Checkbox } from "../ui/checkbox";
-import { toast } from "sonner";
-
-// const STATUS = {
-//   "todo": "bg-red-500",
-//   "in-progress": "bg-amber-500",
-//   "completed": "bg-green-500",
-// }
 
 export default function TodoCard({
   id = 1,
@@ -20,6 +18,11 @@ export default function TodoCard({
   completed = false,
 }) {
   const { data: userName, isLoading } = useUserName(userId);
+  // const { mutate: toggleStatus, isPending } = useToggleTodoStatus();
+
+  // const handleToggleStatus = () => {
+  //   toggleStatus({ id, currentCompleted: completed });
+  // };
 
   function simulateDelete(id) {
     return new Promise((resolve, reject) => {
@@ -43,8 +46,13 @@ export default function TodoCard({
 
   return (
     <li className="hover:bg-avocado-200/50 group relative flex items-center border-zinc-200 last:border-b-0 md:border-b last:[&>*]:border-b-0">
-      <div className="mx-auto grid w-full max-w-xl grid-cols-[1.25rem_minmax(10rem,_1fr)_1.125rem] items-center gap-y-4 border-zinc-200 px-2 py-4 max-md:border-b lg:grid-cols-[1.25rem_minmax(15rem,_1fr)_minmax(8rem,_12rem)_2rem] lg:gap-x-4 lg:pl-4">
-        <Checkbox checked={completed} className={"max-lg:-mb-1"} />
+      <div className="mx-auto grid w-full grid-cols-[1.25rem_minmax(10rem,_1fr)_1.125rem] items-center gap-y-4 border-zinc-200 px-2 py-4 max-md:border-b md:max-w-xl lg:grid-cols-[1.25rem_minmax(15rem,_1fr)_minmax(8rem,_12rem)_2rem] lg:gap-x-4 lg:pl-4">
+        <Checkbox
+          checked={completed}
+          // onChange={handleToggleStatus}
+          // disabled={isPending}
+          className={"max-lg:-mb-1"}
+        />
 
         {/* TASK */}
         <label

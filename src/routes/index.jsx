@@ -49,8 +49,8 @@ function Index() {
   const totalPages = totalCount ? Math.ceil(totalCount / limit) : 1;
 
   return (
-    <section className="relative grid lg:grid-cols-[24rem_1fr]">
-      <div className="flex h-fit justify-between gap-2 py-6 pt-4 max-lg:items-center lg:flex-col lg:space-y-4 lg:px-4">
+    <section className="relative grid h-full grid-rows-[auto_1fr] max-lg:gap-4 lg:grid-cols-[24rem_1fr]">
+      <div className="flex h-fit justify-between gap-2 lg:pb-24 max-lg:items-center lg:flex-col lg:space-y-4 lg:px-4 lg:pt-4">
         <header>
           <h1 className="text-3xl md:text-5xl lg:text-6xl">
             Users <br className="max-lg:hidden" /> Todo List
@@ -74,7 +74,7 @@ function Index() {
 
       <div
         className={cn(
-          "grid max-h-[calc(100svh-11rem)] px-6 max-lg:px-0 md:max-h-[calc(100svh-12rem)] lg:min-h-[calc(100svh-6rem)]",
+          "grid h-full max-h-[calc(100svh-9.5rem)] px-6 max-lg:px-0 md:max-h-[calc(100svh-12rem)] lg:min-h-[calc(100svh-6rem)]",
           !isLoading && "lg:place-content-center",
         )}
       >

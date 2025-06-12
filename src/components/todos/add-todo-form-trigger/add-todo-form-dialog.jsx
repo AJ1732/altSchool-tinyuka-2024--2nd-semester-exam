@@ -18,9 +18,9 @@ export function AddTodoFormDialog({ children }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
-        <DialogHeader className={""}>
+        <DialogHeader>
           <DialogTitle>Add New Todo Item</DialogTitle>
-          <DialogDescription>
+          <DialogDescription className={"text-pretty"}>
             Fill out the fields below to create a new task, including title, due
             date, priority, and any notes.
           </DialogDescription>

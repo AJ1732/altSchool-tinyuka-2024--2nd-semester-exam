@@ -23,7 +23,7 @@ export default function TodoFilterControls({ onSearch, value, onChange }) {
     <div className="space-y-6">
       <header>
         <h3 className="font-semibold">Todo List Controls</h3>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-sm text-pretty">
           Search and filter your todos: enter a keyword to narrow results or
           choose a status (All, Complete, Incomplete).
         </p>
@@ -46,7 +46,7 @@ export default function TodoFilterControls({ onSearch, value, onChange }) {
       <DrawerContent className={"pb-4"}>
         <DrawerHeader>
           <DrawerTitle>Todo List Controls</DrawerTitle>
-          <DrawerDescription>
+          <DrawerDescription className={"text-pretty"}>
             Search and filter your todos: enter a keyword to narrow results or
             choose a status (All, Complete, Incomplete).
           </DrawerDescription>
