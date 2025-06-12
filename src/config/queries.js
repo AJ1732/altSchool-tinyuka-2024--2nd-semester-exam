@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 
 import { fetchTodoID, fetchTodos, fetchUserName } from "./api";
 
-export const useTodos = (page, limit) => {
+export const useTodos = (page, limit, completed, searchQuery) => {
   return useQuery({
-    queryKey: ["todos", page],
-    queryFn: () => fetchTodos(page, limit),
+    queryKey: ["todos", { page, limit, completed, searchQuery }],
+    queryFn: () => fetchTodos(page, limit, completed, searchQuery),
     keepPreviousData: true,
     staleTime: 1000 * 60 * 5,
   });

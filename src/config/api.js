@@ -1,10 +1,15 @@
 import axios from "@/lib/axios";
 
-export const fetchTodos = async (page, limit) => {
+export const fetchTodos = async (page, limit, completed, searchQuery) => {
   try {
-    const response = await axios.get("/todos", {
-      params: { _page: page, _limit: limit },
-    });
+    const params = { _page: page, _limit: limit };
+    if (completed !== undefined) {
+      params.completed = completed;
+    }
+    if (searchQuery) {
+      params.title_like = searchQuery;
+    }
+    const response = await axios.get("/todos", { params });
     return response.data;
   } catch (error) {
     console.error(error);

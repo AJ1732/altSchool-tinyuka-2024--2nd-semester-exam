@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -12,6 +12,7 @@ import {
 } from "@/components/todos";
 import { useTodos } from "@/config/queries";
 import { cn } from "@/lib/utils";
+import { mapStatusValueToCompleted } from "@/utils";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -22,7 +23,24 @@ function Index() {
   const totalPages = 20;
   const [page, setPage] = useState(1);
 
-  const { data: todos, isLoading, error, isFetching } = useTodos(page, limit);
+  // STATUS TOGGLE
+  const [statusValue, setStatusValue] = useState("all");
+  const completedParam = mapStatusValueToCompleted(statusValue);
+
+  // SEARCH QUERY
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // To reset back to page 1 when filter occurs
+  useEffect(() => {
+    setPage(1);
+  }, [statusValue, searchTerm]);
+
+  const {
+    data: todos,
+    isLoading,
+    error,
+    isFetching,
+  } = useTodos(page, limit, completedParam, searchTerm);
 
   if (error) throw new Error(error);
 
@@ -43,7 +61,11 @@ function Index() {
           </Button>
         </AddTodoFormTrigger>
 
-        <TodoFilterControls />
+        <TodoFilterControls
+          value={statusValue}
+          onChange={(newVal) => setStatusValue(newVal)}
+          onSearch={(term) => setSearchTerm(term)}
+        />
       </div>
 
       <div

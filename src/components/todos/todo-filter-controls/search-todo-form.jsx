@@ -1,7 +1,10 @@
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { Search } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
   Form,
   FormControl,
@@ -10,14 +13,12 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useEffect } from "react";
-import { Search } from "lucide-react";
 
 const FormSchema = z.object({
   query: z.string(),
 });
 
-export function SearchTodoForm() {
+export function SearchTodoForm({ onSearch }) {
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: { query: "" },
@@ -27,14 +28,15 @@ export function SearchTodoForm() {
 
   // Debounce Search Query
   useEffect(() => {
-    if (searchValue.trim() === "") return;
-
+    const trimmed = searchValue.trim();
     const handle = setTimeout(() => {
-      toast(`Search value: ${searchValue}`);
+      if (typeof onSearch === "function") {
+        onSearch(trimmed);
+      }
     }, 500);
 
     return () => clearTimeout(handle);
-  }, [searchValue]);
+  }, [searchValue, onSearch]);
 
   return (
     <Form {...form}>

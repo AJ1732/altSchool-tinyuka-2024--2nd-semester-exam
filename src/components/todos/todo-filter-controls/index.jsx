@@ -16,7 +16,7 @@ import { useIsDesktop } from "@/hooks/use-isdesktop";
 import { SearchTodoForm } from "./search-todo-form";
 import { StatusTodoToggleGroup } from "./status-todo-toggle";
 
-export default function TodoFilterControls() {
+export default function TodoFilterControls({ onSearch, value, onChange }) {
   const isDesktop = useIsDesktop();
 
   return isDesktop ? (
@@ -30,11 +30,11 @@ export default function TodoFilterControls() {
       </header>
       <hr />
 
-      <SearchTodoForm />
+      <SearchTodoForm onSearch={onSearch} />
 
       <hr />
 
-      <StatusTodoToggleGroup />
+      <StatusTodoToggleGroup {...{ value, onChange }} />
     </div>
   ) : (
     <Drawer>
@@ -55,11 +55,11 @@ export default function TodoFilterControls() {
         <div className="space-y-4 px-4 pt-0 pb-8">
           <hr />
 
-          <SearchTodoForm />
+          <SearchTodoForm onSearch={onSearch} />
 
           <hr />
 
-          <StatusTodoToggleGroup />
+          <StatusTodoToggleGroup {...{ value, onChange }} />
         </div>
 
         <DrawerFooter>

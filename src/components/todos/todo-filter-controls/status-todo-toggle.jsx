@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { toast } from "sonner";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
@@ -9,16 +8,13 @@ const STATUS_OPTIONS = [
   { value: "incomplete", label: "Incomplete" },
 ];
 
-export function StatusTodoToggleGroup({ defaultValue = "all", onChange }) {
-  const [value, setValue] = useState(defaultValue);
-
+export function StatusTodoToggleGroup({ value, onChange }) {
   const handleValueChange = (newValue) => {
     if (!newValue) return;
-    setValue(newValue);
     if (typeof onChange === "function") {
       onChange(newValue);
     }
-    toast(`${newValue} todos`);
+    toast(`Showing ${newValue} todos`);
   };
 
   return (
