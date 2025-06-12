@@ -20,7 +20,6 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const limit = 10;
-  const totalPages = 20;
   const [page, setPage] = useState(1);
 
   // STATUS TOGGLE
@@ -35,14 +34,19 @@ function Index() {
     setPage(1);
   }, [statusValue, searchTerm]);
 
-  const {
-    data: todos,
-    isLoading,
-    error,
-    isFetching,
-  } = useTodos(page, limit, completedParam, searchTerm);
+  const { data, isLoading, error, isFetching } = useTodos(
+    page,
+    limit,
+    completedParam,
+    searchTerm,
+  );
 
   if (error) throw new Error(error);
+
+  const todos = data?.todos || [];
+  const totalCount = data?.totalCount;
+
+  const totalPages = totalCount ? Math.ceil(totalCount / limit) : 1;
 
   return (
     <section className="relative grid lg:grid-cols-[24rem_1fr]">

@@ -20,7 +20,7 @@ export default function TodoPagination({
 
       <button
         onClick={() => setPage((old) => old + 1)}
-        disabled={page === totalPages || isFetching}
+        disabled={page >= totalPages || isFetching}
         className=""
       >
         <ChevronRight className="stroke-1" />

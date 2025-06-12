@@ -14,7 +14,7 @@ export function StatusTodoToggleGroup({ value, onChange }) {
     if (typeof onChange === "function") {
       onChange(newValue);
     }
-    toast(`Showing ${newValue} todos`);
+    toast(`Showing ${newValue.toUppercase()} todos`);
   };
 
   return (

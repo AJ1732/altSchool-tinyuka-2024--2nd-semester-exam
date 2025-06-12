@@ -2,6 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 
 import { fetchTodoID, fetchTodos, fetchUserName } from "./api";
 
+/**
+ * @param {number} page
+ * @param {number} limit
+ * @param {boolean|undefined} completed
+ * @param {string|undefined} searchTerm
+ * @returns {Object} { data: { todos, totalCount }, isLoading, error, isFetching, ... }
+ */
 export const useTodos = (page, limit, completed, searchQuery) => {
   return useQuery({
     queryKey: ["todos", { page, limit, completed, searchQuery }],
