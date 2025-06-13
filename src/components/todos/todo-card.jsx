@@ -2,11 +2,7 @@ import { Trash2 } from "lucide-react";
 
 import { Link } from "@tanstack/react-router";
 
-import {
-  useDeleteTodo,
-  useToggleTodoStatus,
-  useUserName,
-} from "@/config/queries";
+import { useDeleteTodo, useUpdateTodo, useUserName } from "@/config/queries";
 import { cn } from "@/lib/utils";
 
 import { Checkbox } from "../ui/checkbox";
@@ -18,11 +14,10 @@ export default function TodoCard({
   completed = false,
 }) {
   const { data: userName, isLoading } = useUserName(userId);
-  const { mutate: toggleStatus, isPending: pendingStatus } =
-    useToggleTodoStatus();
+  const { mutate: updateTodo, isPending: pendingStatus } = useUpdateTodo();
   const { mutate: deleteTodo, isPending: pendingDelete } = useDeleteTodo();
 
-  const handleToggle = () => toggleStatus({ id, completed: !completed });
+  const handleToggle = () => updateTodo({ id, completed: !completed });
   const handleDelete = () => deleteTodo({ id });
 
   return (

@@ -1,10 +1,10 @@
-import { useToggleTodoStatus } from "@/config/queries";
+import { useUpdateTodo } from "@/config/queries";
 import { cn } from "@/lib/utils";
 
 export default function TodoStatusBadge({ id, completed }) {
-  const { mutate: toggleStatus, isPending } = useToggleTodoStatus();
+  const { mutate: updateTodo, isPending } = useUpdateTodo();
 
-  const handleToggle = () => toggleStatus({ id, completed: !completed });
+  const handleToggle = () => updateTodo({ id, completed: !completed });
 
   return (
     <button

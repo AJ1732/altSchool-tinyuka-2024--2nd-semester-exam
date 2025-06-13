@@ -7,7 +7,7 @@ import {
   fetchTodoID,
   fetchTodos,
   fetchUserName,
-  updateTodoStatus,
+  updateTodo,
 } from "./api";
 
 /**
@@ -37,30 +37,35 @@ export const useTodoID = (todoId) => {
   });
 };
 
-export const useToggleTodoStatus = () => {
+export const useUpdateTodo = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, completed }) => {
-      const response = await updateTodoStatus(id, completed);
-      toast.promise(updateTodoStatus(id, completed), {
-        loading: `Updating todo ${id} Status...`,
-        success: () => `You updated the  Todo ${id} Status`,
-        error: (err) => `Failed to update Todo ${id} Status: ${err.message}`,
+    mutationFn: async (updatedData) => {
+      const response = updateTodo(updatedData);
+      toast.promise(updateTodo(updatedData), {
+        // loading: `Updating todo ${updatedData.id}...`, // the loading toast laggs
+        success: (response) => {
+          const updatedFields = [];
+          if (updatedData.title !== undefined) updatedFields.push("title");
+          if (updatedData.completed !== undefined) updatedFields.push("status");
+
+          return `Successfully updated Todo ${response.id} ${updatedFields.join(" and ")}!`;
+        },
+        error: (err) =>
+          `Failed to update Todo ${updatedData.id}: ${err.message}`,
       });
       return response;
     },
     onSuccess: (updatedTodo) => {
       // Update specific todo in cache
       queryClient.setQueryData(["todo", updatedTodo.id], updatedTodo);
-
       // Invalidate todos list to refetch and update the list
       queryClient.invalidateQueries({ queryKey: ["todos"] });
-
-      console.log("Updated Todo:", updatedTodo);
+      // console.log("Updated Todo:", updatedTodo);
     },
     onError: (error) => {
-      console.error("Toggle todo status error:", error);
+      console.error("Update todo error:", error);
     },
   });
 };

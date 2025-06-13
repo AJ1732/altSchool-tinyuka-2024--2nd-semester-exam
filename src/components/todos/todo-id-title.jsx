@@ -15,15 +15,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "sonner";
+import { useUpdateTodo } from "@/config/queries";
 
 const TitleSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters."),
 });
 
-export default function TodoIDTitle({ id, todo, title }) {
+export default function TodoIDTitle({ id, title }) {
   const [titleState, setTitleState] = useState(title);
   const [isEditable, setIsEditable] = useState(false);
+
+  const { mutate: updateTodo, isPending } = useUpdateTodo();
 
   const form = useForm({
     resolver: zodResolver(TitleSchema),
@@ -36,44 +38,21 @@ export default function TodoIDTitle({ id, todo, title }) {
     if (isEditable) {
       form.reset({ title: titleState });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEditable]);
+  }, [isEditable, form, titleState]);
 
   // TITLE UPDATE
   const onSubmit = (data) => {
     const newTitle = data.title.trim();
-    // TODO: To be replaced by update mutation
-    const simulateUpdate = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (Math.random() < 0.3) {
-          reject(new Error("Network error"));
-        } else {
-          resolve({
-            ...todo,
-            title: newTitle,
-          });
-        }
-      }, 5000);
-    });
-
-    toast.promise(simulateUpdate, {
-      loading: `Updating Todo ${id}...`,
-      success: (updatedTodo) => {
-        setTitleState(updatedTodo.title);
-        setIsEditable(false);
-        toast(`Updated Todo ${id}`, {
-          description: (
-            <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-              <code className="text-white">
-                {JSON.stringify(updatedTodo, null, 2)}
-              </code>
-            </pre>
-          ),
-        });
-        return `Todo ${id} updated`;
+    updateTodo(
+      { id, title: newTitle },
+      {
+        onSuccess: (updatedTodo) => {
+          setTitleState(updatedTodo.title);
+          setIsEditable(false);
+          form.reset({ title: updatedTodo.title });
+        },
       },
-      error: (err) => `Failed to update Todo ${id}: ${err.message}`,
-    });
+    );
   };
 
   return (
@@ -101,13 +80,14 @@ export default function TodoIDTitle({ id, todo, title }) {
               )}
             />
             <div className="flex flex-col gap-2">
-              <Button size="icon" type="submit">
+              <Button size="icon" type="submit" disabled={isPending}>
                 <Save />
               </Button>
               <Button
                 type="button"
                 variant="outline"
                 size="icon"
+                disabled={isPending}
                 onClick={() => {
                   setIsEditable(false);
                   form.reset({ title: titleState });

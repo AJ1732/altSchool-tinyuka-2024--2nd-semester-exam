@@ -9,12 +9,9 @@ import axios from "@/lib/axios";
 export const fetchTodos = async (page, limit, completed, searchQuery) => {
   try {
     const params = { _page: page, _limit: limit };
-    if (completed !== undefined) {
-      params.completed = completed;
-    }
-    if (searchQuery) {
-      params.title_like = searchQuery;
-    }
+    if (completed !== undefined) params.completed = completed;
+    if (searchQuery) params.title_like = searchQuery;
+
     const response = await axios.get("/todos", { params });
     const totalCountHeader = response.headers["x-total-count"];
     const totalCount = totalCountHeader ? parseInt(totalCountHeader, 10) : null;
@@ -43,9 +40,13 @@ export const fetchTodoID = async (id) => {
  * @param {number | string} id
  * @param {boolean} completed
  */
-export const updateTodoStatus = async (id, completed) => {
+export const updateTodo = async ({ id, title, completed }) => {
+  const body = {};
+  if (title !== undefined) body.title = title;
+  if (completed !== undefined) body.completed = completed;
+
   try {
-    const response = await axios.patch(`/todos/${id}`, { completed });
+    const response = await axios.patch(`/todos/${id}`, body);
     return response.data;
   } catch (error) {
     console.error("updateTodoStatus error:", error);
