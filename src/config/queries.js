@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
+  deleteTodo,
   fetchTodoID,
   fetchTodos,
   fetchUserName,
@@ -57,6 +58,29 @@ export const useToggleTodoStatus = () => {
       queryClient.invalidateQueries({ queryKey: ["todos"] });
 
       console.log("Updated Todo:", updatedTodo);
+    },
+    onError: (error) => {
+      console.error("Toggle todo status error:", error);
+    },
+  });
+};
+
+export const useDeleteTodo = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id }) => {
+      const response = await deleteTodo(id);
+      toast.promise(deleteTodo(id), {
+        loading: `Deleting todo ${id}...`,
+        success: () => `You deleted Todo ${id}`,
+        error: (err) => `Failed to delete Todo ${id}: ${err.message}`,
+      });
+      return response;
+    },
+    onSuccess: () => {
+      // Invalidate todos list to refetch and update the list
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
     },
     onError: (error) => {
       console.error("Toggle todo status error:", error);

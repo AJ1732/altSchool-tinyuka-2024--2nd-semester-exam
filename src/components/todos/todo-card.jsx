@@ -1,9 +1,12 @@
 import { Trash2 } from "lucide-react";
-import { toast } from "sonner";
 
 import { Link } from "@tanstack/react-router";
 
-import { useToggleTodoStatus, useUserName } from "@/config/queries";
+import {
+  useDeleteTodo,
+  useToggleTodoStatus,
+  useUserName,
+} from "@/config/queries";
 import { cn } from "@/lib/utils";
 
 import { Checkbox } from "../ui/checkbox";
@@ -15,29 +18,12 @@ export default function TodoCard({
   completed = false,
 }) {
   const { data: userName, isLoading } = useUserName(userId);
-  const { mutate: toggleStatus, isPending } = useToggleTodoStatus();
+  const { mutate: toggleStatus, isPending: pendingStatus } =
+    useToggleTodoStatus();
+  const { mutate: deleteTodo, isPending: pendingDelete } = useDeleteTodo();
 
   const handleToggle = () => toggleStatus({ id, completed: !completed });
-
-  function simulateDelete(id) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (Math.random() < 0.3) {
-          reject(new Error("Network error"));
-        } else {
-          resolve(id);
-        }
-      }, 5000);
-    });
-  }
-
-  const handleDelete = () => {
-    toast.promise(simulateDelete(id), {
-      loading: `Deleting todo ${id}...`,
-      success: () => `Deleted Todo ${id}`,
-      error: (err) => `Failed to delete Todo ${id}: ${err.message}`,
-    });
-  };
+  const handleDelete = () => deleteTodo({ id });
 
   return (
     <li className="hover:bg-avocado-200/50 group relative flex items-center border-zinc-200 last:border-b-0 md:border-b last:[&>*]:border-b-0">
@@ -45,8 +31,8 @@ export default function TodoCard({
         <Checkbox
           checked={completed}
           onCheckedChange={handleToggle}
-          disabled={isPending}
-          className={cn("max-lg:-mb-1", isPending && "bg-avocado-300")}
+          disabled={pendingStatus}
+          className={cn("max-lg:-mb-1", pendingStatus && "bg-avocado-300")}
         />
 
         {/* TASK */}
@@ -77,7 +63,8 @@ export default function TodoCard({
           {/* MOBILE BUTTON */}
           <button
             onClick={handleDelete}
-            className="cursor-pointer rounded lg:hidden"
+            disabled={pendingDelete}
+            className="cursor-pointer rounded disabled:cursor-not-allowed disabled:opacity-50 lg:hidden"
           >
             <Trash2 className="size-[1.125rem] stroke-red-500/80" />
           </button>
@@ -87,8 +74,9 @@ export default function TodoCard({
       {/* DESKTOP BUTTON */}
       <button
         onClick={handleDelete}
+        disabled={pendingDelete}
         className={cn(
-          "pointer-events-none absolute right-2 -z-[1] grid size-8 cursor-pointer place-content-center rounded-full bg-red-50 opacity-0 transition-all duration-500 max-lg:hidden",
+          "pointer-events-none absolute right-2 -z-[1] grid size-8 cursor-pointer place-content-center rounded-full bg-red-50 opacity-0 transition-all duration-500 disabled:cursor-not-allowed disabled:opacity-50 max-lg:hidden",
           "group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:z-0 group-hover:opacity-100",
         )}
       >
