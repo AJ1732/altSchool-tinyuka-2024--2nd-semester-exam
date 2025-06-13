@@ -1,7 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 import { toast } from "sonner";
+
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
   fetchTodoID,
@@ -37,35 +36,33 @@ export const useTodoID = (todoId) => {
   });
 };
 
-export function useToggleTodoStatus() {
+export const useToggleTodoStatus = () => {
   const queryClient = useQueryClient();
-  return useMutation(
-    ({ id, completed }) => {
-      const newStatus = !completed;
-      return updateTodoStatus(id, newStatus);
+
+  return useMutation({
+    mutationFn: async ({ id, completed }) => {
+      const response = await updateTodoStatus(id, completed);
+      toast.promise(updateTodoStatus(id, completed), {
+        loading: `Updating todo ${id} Status...`,
+        success: () => `You updated the  Todo ${id} Status`,
+        error: (err) => `Failed to update Todo ${id} Status: ${err.message}`,
+      });
+      return response;
     },
-    {
-      onMutate: ({ id }) => {
-        toast.loading(`Updating Todo ${id} status...`);
-      },
-      onSuccess: (updatedTodo, variables) => {
-        toast.success(
-          `Todo ${updatedTodo.id} marked ${
-            updatedTodo.completed ? "completed" : "incomplete"
-          }`,
-        );
-        // Invalidate or refetch the todos list so UI updates:
-        queryClient.invalidateQueries(["todos"]);
-        queryClient.invalidateQueries(["todo", variables.id]);
-      },
-      onError: (err, variables) => {
-        toast.error(
-          `Failed to update Todo ${variables.id} status: ${err.message}`,
-        );
-      },
+    onSuccess: (updatedTodo) => {
+      // Update specific todo in cache
+      queryClient.setQueryData(["todo", updatedTodo.id], updatedTodo);
+
+      // Invalidate todos list to refetch and update the list
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+
+      console.log("Updated Todo:", updatedTodo);
     },
-  );
-}
+    onError: (error) => {
+      console.error("Toggle todo status error:", error);
+    },
+  });
+};
 
 /**
  * @param {number | string} userId

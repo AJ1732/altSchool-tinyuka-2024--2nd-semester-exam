@@ -41,6 +41,7 @@ export const fetchTodoID = async (id) => {
 
 /**
  * @param {number | string} id
+ * @param {boolean} completed
  */
 export const updateTodoStatus = async (id, completed) => {
   try {
@@ -49,6 +50,19 @@ export const updateTodoStatus = async (id, completed) => {
   } catch (error) {
     console.error("updateTodoStatus error:", error);
     throw new Error(`Failed to update Todo status with id ${id}`);
+  }
+};
+
+/**
+ * @param {number | string} id
+ */
+export const deleteTodo = async (id) => {
+  try {
+    const response = await axios.delete(`/todos/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("deleteTodo error:", error);
+    throw new Error(`Failed to delete Todo with id ${id}`);
   }
 };
 
