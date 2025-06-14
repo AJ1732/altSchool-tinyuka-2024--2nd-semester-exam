@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as ErrorImport } from './routes/error'
+import { Route as TodosRouteImport } from './routes/todos/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as TodosIdImport } from './routes/todos/$id'
 
@@ -23,6 +24,12 @@ const ErrorRoute = ErrorImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const TodosRouteRoute = TodosRouteImport.update({
+  id: '/todos',
+  path: '/todos',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
@@ -30,9 +37,9 @@ const IndexRoute = IndexImport.update({
 } as any)
 
 const TodosIdRoute = TodosIdImport.update({
-  id: '/todos/$id',
-  path: '/todos/$id',
-  getParentRoute: () => rootRoute,
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => TodosRouteRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -46,6 +53,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/todos': {
+      id: '/todos'
+      path: '/todos'
+      fullPath: '/todos'
+      preLoaderRoute: typeof TodosRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/error': {
       id: '/error'
       path: '/error'
@@ -55,24 +69,38 @@ declare module '@tanstack/react-router' {
     }
     '/todos/$id': {
       id: '/todos/$id'
-      path: '/todos/$id'
+      path: '/$id'
       fullPath: '/todos/$id'
       preLoaderRoute: typeof TodosIdImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof TodosRouteImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface TodosRouteRouteChildren {
+  TodosIdRoute: typeof TodosIdRoute
+}
+
+const TodosRouteRouteChildren: TodosRouteRouteChildren = {
+  TodosIdRoute: TodosIdRoute,
+}
+
+const TodosRouteRouteWithChildren = TodosRouteRoute._addFileChildren(
+  TodosRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/todos': typeof TodosRouteRouteWithChildren
   '/error': typeof ErrorRoute
   '/todos/$id': typeof TodosIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/todos': typeof TodosRouteRouteWithChildren
   '/error': typeof ErrorRoute
   '/todos/$id': typeof TodosIdRoute
 }
@@ -80,29 +108,30 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/todos': typeof TodosRouteRouteWithChildren
   '/error': typeof ErrorRoute
   '/todos/$id': typeof TodosIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/error' | '/todos/$id'
+  fullPaths: '/' | '/todos' | '/error' | '/todos/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/error' | '/todos/$id'
-  id: '__root__' | '/' | '/error' | '/todos/$id'
+  to: '/' | '/todos' | '/error' | '/todos/$id'
+  id: '__root__' | '/' | '/todos' | '/error' | '/todos/$id'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  TodosRouteRoute: typeof TodosRouteRouteWithChildren
   ErrorRoute: typeof ErrorRoute
-  TodosIdRoute: typeof TodosIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  TodosRouteRoute: TodosRouteRouteWithChildren,
   ErrorRoute: ErrorRoute,
-  TodosIdRoute: TodosIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -116,18 +145,25 @@ export const routeTree = rootRoute
       "filePath": "__root.jsx",
       "children": [
         "/",
-        "/error",
-        "/todos/$id"
+        "/todos",
+        "/error"
       ]
     },
     "/": {
       "filePath": "index.jsx"
     },
+    "/todos": {
+      "filePath": "todos/route.jsx",
+      "children": [
+        "/todos/$id"
+      ]
+    },
     "/error": {
       "filePath": "error.jsx"
     },
     "/todos/$id": {
-      "filePath": "todos/$id.jsx"
+      "filePath": "todos/$id.jsx",
+      "parent": "/todos"
     }
   }
 }
