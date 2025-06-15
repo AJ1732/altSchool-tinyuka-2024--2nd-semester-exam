@@ -19,7 +19,11 @@ export default function NotFound() {
           Don&apos;t worry, We all get lost sometimes
         </p>
 
-        <Button asChild className={"h-14 px-8 text-xl"} size={"lg"}>
+        <Button
+          asChild
+          className={"ml-auto h-14 w-fit px-8 text-xl"}
+          size={"lg"}
+        >
           <Link to={"/"}>Let&apos;s go Home</Link>
         </Button>
       </div>

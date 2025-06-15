@@ -201,6 +201,10 @@
   );
 }
 
+@utility overflow-break-word {
+  overflow-wrap: break-word;
+}
+
 /* SCROLLBAR */
 *::-webkit-scrollbar {
   width: 8px;

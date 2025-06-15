@@ -17,9 +17,17 @@ function Index() {
           A comprehensive Todo application using React that showcases API
           integration, modern patterns, routing, and accessible UI.
         </p>
-        <Button size={"lg"} asChild>
-          <Link to="/todos">View Todos</Link>
-        </Button>
+        <div className="flex flex-wrap gap-4">
+          <Button size={"lg"} asChild>
+            <Link to="/todos">View Todos</Link>
+          </Button>
+          <Button size={"lg"} asChild variant={"outline"}>
+            <Link to="/error">Test Error Page</Link>
+          </Button>
+          <Button size={"lg"} asChild variant={"destructive"}>
+            <Link to="/alt">Test Not Found Page</Link>
+          </Button>
+        </div>
       </header>
 
       {/* Technical Requirements */}
@@ -34,11 +42,19 @@ function Index() {
               <strong>React 19+</strong> with functional components and hooks
             </li>
             <li>
+              UI Library <strong>Shadcn UI</strong> to speed up development
+            </li>
+            <li>
               <strong>TanStack Router</strong> for routing/navigation
             </li>
             <li>
-              API Integration <strong>Axios</strong> with{" "}
-              <strong>TanStack Query</strong>
+              API Integration of{" "}
+              <strong>
+                <Link to={"https://jsonplaceholder.typicode.com"}>
+                  JSONplaceholder
+                </Link>
+              </strong> todos{" "}
+              with <strong>Axios</strong> and <strong>TanStack Query</strong>
             </li>
             <li>
               Styling with <strong>Tailwind CSS</strong>

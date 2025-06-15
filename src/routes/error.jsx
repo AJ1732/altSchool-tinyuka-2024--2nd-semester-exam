@@ -1,9 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/error')({
+export const Route = createFileRoute("/error")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  throw new Error('Test error triggered');
+  throw new Error("Test error triggered");
 }
