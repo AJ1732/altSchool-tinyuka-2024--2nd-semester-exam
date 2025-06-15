@@ -3,10 +3,12 @@ import { toast } from "sonner";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
+  addTodo,
   deleteTodo,
   fetchTodoID,
   fetchTodos,
   fetchUserName,
+  fetchUsers,
   updateTodo,
 } from "./api";
 
@@ -37,14 +39,53 @@ export const useTodoID = (todoId) => {
   });
 };
 
+export const useAddTodo = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (newTodoData) => {
+      toast.promise(addTodo(newTodoData), {
+        loading: `Adding new todo...`,
+        success: (response) => `Successfully added Todo "${response.title}"!`,
+        error: (err) => `Failed to add todo: ${err.message}`,
+      });
+
+      return await addTodo(newTodoData);
+    },
+    onSuccess: (newTodo) => {
+      queryClient.setQueryData(["todo", newTodo.id], newTodo);
+
+      // Update all todos list caches to include the new todo
+      queryClient.setQueriesData({ queryKey: ["todos"] }, (oldData) => {
+        if (!oldData || !Array.isArray(oldData.todos)) {
+          return oldData;
+        }
+        const updatedTodos = [newTodo, ...oldData.todos];
+
+        return {
+          ...oldData,
+          todos: updatedTodos,
+          totalCount: oldData.totalCount
+            ? oldData.totalCount + 1
+            : oldData.totalCount,
+        };
+      });
+
+      console.log("Added Todo:", newTodo);
+    },
+    onError: (error) => {
+      console.error("Add todo error:", error);
+    },
+  });
+};
+
 export const useUpdateTodo = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (updatedData) => {
-      const response = updateTodo(updatedData);
       toast.promise(updateTodo(updatedData), {
-        // loading: `Updating todo ${updatedData.id}...`, // the loading toast laggs
+        loading: `Updating todo ${updatedData.id}...`, // the loading toast laggs
         success: (response) => {
           const updatedFields = [];
           if (updatedData.title !== undefined) updatedFields.push("title");
@@ -55,14 +96,13 @@ export const useUpdateTodo = () => {
         error: (err) =>
           `Failed to update Todo ${updatedData.id}: ${err.message}`,
       });
+
+      const response = await updateTodo(updatedData);
       return response;
     },
     onSuccess: (updatedTodo) => {
-      // Update specific todo in cache
       queryClient.setQueryData(["todo", updatedTodo.id], updatedTodo);
-      // Invalidate todos list to refetch and update the list
-      queryClient.invalidateQueries({ queryKey: ["todos"] });
-      // console.log("Updated Todo:", updatedTodo);
+      // queryClient.invalidateQueries({ queryKey: ["todos"] });
     },
     onError: (error) => {
       console.error("Update todo error:", error);
@@ -71,25 +111,32 @@ export const useUpdateTodo = () => {
 };
 
 export const useDeleteTodo = () => {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({ id }) => {
-      const response = await deleteTodo(id);
       toast.promise(deleteTodo(id), {
         loading: `Deleting todo ${id}...`,
         success: () => `You deleted Todo ${id}`,
         error: (err) => `Failed to delete Todo ${id}: ${err.message}`,
       });
-      return response;
+      await deleteTodo(id);
+      return id;
     },
     onSuccess: () => {
-      // Invalidate todos list to refetch and update the list
-      queryClient.invalidateQueries({ queryKey: ["todos"] });
+      // queryClient.invalidateQueries({ queryKey: ["todos"] });
     },
     onError: (error) => {
       console.error("Toggle todo status error:", error);
     },
+  });
+};
+
+export const useUsers = () => {
+  return useQuery({
+    queryKey: ["users"],
+    queryFn: fetchUsers,
+    staleTime: 1000 * 60 * 5,
   });
 };
 

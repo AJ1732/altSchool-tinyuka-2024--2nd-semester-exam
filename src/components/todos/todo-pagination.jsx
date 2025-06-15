@@ -7,11 +7,10 @@ export default function TodoPagination({
   isFetching,
 }) {
   return (
-    <div className="mx-auto mt-auto flex h-fit w-full max-w-[calc(100%-6rem)] justify-between rounded-full border border-zinc-100 bg-zinc-100/90 p-4 py-2 shadow-2xs backdrop-blur-sm lg:absolute lg:bottom-6 lg:left-6 lg:max-w-80">
+    <div className="mx-auto mt-auto flex h-fit w-full max-w-[calc(100%-6rem)] justify-between rounded-full border bg-zinc-100/90 p-4 py-2 backdrop-blur-sm lg:absolute lg:bottom-6 lg:left-6 lg:max-w-80">
       <button
         onClick={() => setPage((old) => Math.max(old - 1, 1))}
         disabled={page === 1 || isFetching}
-        className=""
       >
         <ChevronLeft className="stroke-1" />
       </button>
@@ -21,7 +20,6 @@ export default function TodoPagination({
       <button
         onClick={() => setPage((old) => old + 1)}
         disabled={page >= totalPages || isFetching}
-        className=""
       >
         <ChevronRight className="stroke-1" />
       </button>

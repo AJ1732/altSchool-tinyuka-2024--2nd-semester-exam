@@ -37,6 +37,25 @@ export const fetchTodoID = async (id) => {
 };
 
 /**
+ * @param {Object} todoData
+ * @param {string} todoData.title
+ * @param {number} todoData.userId
+ */
+export const addTodo = async ({ title, userId = 1 }) => {
+  try {
+    const response = await axios.post("/todos", {
+      title,
+      userId,
+      completed: false,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("addTodo error:", error);
+    throw new Error(`Failed to add Todo`);
+  }
+};
+
+/**
  * @param {number | string} id
  * @param {boolean} completed
  */
@@ -64,6 +83,16 @@ export const deleteTodo = async (id) => {
   } catch (error) {
     console.error("deleteTodo error:", error);
     throw new Error(`Failed to delete Todo with id ${id}`);
+  }
+};
+
+export const fetchUsers = async () => {
+  try {
+    const response = await axios.get("/users");
+    return response.data;
+  } catch (error) {
+    console.error("fetchTodos error:", error);
+    throw new Error(`Failed to fetch Todos`);
   }
 };
 

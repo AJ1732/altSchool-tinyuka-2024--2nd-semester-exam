@@ -12,10 +12,20 @@ import {
   TodoFilterControls,
 } from "@/components/todos";
 import { useTodos } from "@/config/queries";
+import { fetchUsers } from "@/config/api";
 import { cn } from "@/lib/utils";
 import { mapStatusValueToCompleted } from "@/utils";
 
-export const Route = createFileRoute("/todos")({
+export const Route = createFileRoute("/todos/")({
+  loader: ({ context: { queryClient } }) => {
+      // console.log('Context:', context) // Debug what's available
+    console.log('QueryClient:', queryClient) 
+    return queryClient.ensureQueryData({
+      queryKey: ["users"],
+      queryFn: fetchUsers,
+      staleTime: 1000 * 60 * 10,
+    });
+  },
   component: RouteComponent,
 });
 

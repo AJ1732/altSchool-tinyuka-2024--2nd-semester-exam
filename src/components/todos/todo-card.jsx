@@ -6,6 +6,7 @@ import { useDeleteTodo, useUpdateTodo, useUserName } from "@/config/queries";
 import { cn } from "@/lib/utils";
 
 import { Checkbox } from "../ui/checkbox";
+import { useState } from "react";
 
 export default function TodoCard({
   id = 1,
@@ -14,17 +15,25 @@ export default function TodoCard({
   completed = false,
 }) {
   const { data: userName, isLoading } = useUserName(userId);
+  const [newCompleted, setNewCompleted] = useState(completed);
   const { mutate: updateTodo, isPending: pendingStatus } = useUpdateTodo();
   const { mutate: deleteTodo, isPending: pendingDelete } = useDeleteTodo();
 
-  const handleToggle = () => updateTodo({ id, completed: !completed });
   const handleDelete = () => deleteTodo({ id });
+  const handleToggle = () => {
+    updateTodo(
+      { id, completed: !newCompleted },
+      {
+        onSuccess: (updatedTodo) => setNewCompleted(updatedTodo.completed),
+      },
+    );
+  };
 
   return (
-    <li className="hover:bg-avocado-200/50 group relative flex items-center border-zinc-200 last:border-b-0 md:border-b last:[&>*]:border-b-0">
-      <div className="mx-auto grid w-full grid-cols-[1.25rem_minmax(10rem,_1fr)_1.125rem] items-center gap-y-4 border-zinc-200 px-2 py-4 max-md:border-b md:max-w-xl lg:grid-cols-[1.25rem_minmax(15rem,_1fr)_minmax(8rem,_12rem)_2rem] lg:gap-x-4 lg:pl-4">
+    <li className="hover:bg-avocado-200/50 group relative flex items-center border-b border-neutral-300/80 last:border-b-0 last:[&>*]:border-b-0">
+      <div className="mx-auto grid w-full grid-cols-[1.25rem_minmax(10rem,_1fr)_1.125rem] items-center gap-y-4 px-2 py-4 md:max-w-xl lg:grid-cols-[1.25rem_minmax(15rem,_1fr)_minmax(8rem,_12rem)_2rem] lg:gap-x-4 lg:pl-4">
         <Checkbox
-          checked={completed}
+          checked={newCompleted}
           onCheckedChange={handleToggle}
           disabled={pendingStatus}
           className={cn("max-lg:-mb-1", pendingStatus && "bg-avocado-300")}
@@ -51,7 +60,7 @@ export default function TodoCard({
             aria-hidden="true"
             className={cn(
               "size-2 self-center rounded-full transition-transform duration-500 lg:group-focus-within:-translate-x-8 lg:group-hover:-translate-x-8",
-              completed ? "bg-emerald-500" : "bg-red-400",
+              newCompleted ? "bg-emerald-500" : "bg-red-400",
             )}
           />
 

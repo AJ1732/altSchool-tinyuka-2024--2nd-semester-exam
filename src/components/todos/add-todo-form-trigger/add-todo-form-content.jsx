@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -13,33 +12,46 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useAddTodo, useUsers } from "@/config/queries";
 
 const FormSchema = z.object({
-  title: z.string().min(2, {
-    message: "Todo title must be at least 2 characters.",
+  title: z.string().min(3, {
+    message: "Todo title must be at least 3 characters.",
   }),
-  owner: z.string().min(2, {
-    message: "Todo title must be at least 2 characters.",
+  userId: z.string().min(1, {
+    message: "Please select a user.",
   }),
 });
 
 export function AddTodoFormContent({ onClose }) {
+  const { mutate: addTodo, isPending } = useAddTodo();
+  const { data: users } = useUsers();
+  console.log("Users:", users);
+
   const form = useForm({
     resolver: zodResolver(FormSchema),
-    defaultValues: { title: "", owner: "" },
+    defaultValues: { title: "", userId: "" },
     // mode: "onTouched",
     // reValidateMode: "onChange",
   });
 
-  function onSubmit(data) {
-    onClose();
-    toast("You submitted the following values", {
-      description: (
-        <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+  function onSubmit({ title, userId }) {
+    addTodo(
+      { title, userId },
+      {
+        onSuccess: () => {
+          onClose();
+          form.reset();
+        },
+      },
+    );
   }
 
   return (
@@ -53,7 +65,7 @@ export function AddTodoFormContent({ onClose }) {
             <FormItem>
               <FormLabel>Todo Title</FormLabel>
               <FormControl>
-                <Input placeholder="Complete Assignment" {...field} />
+                <Input placeholder="e.g. Complete Assignment" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -63,13 +75,32 @@ export function AddTodoFormContent({ onClose }) {
         {/* TODO OWNER */}
         <FormField
           control={form.control}
-          name="owner"
+          name="userId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Todo Owner</FormLabel>
-              <FormControl>
-                <Input placeholder="e.g John Doe" {...field} />
-              </FormControl>
+              <FormLabel>Assign To</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                disabled={isPending}
+                className="w-full"
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue
+                      placeholder="Select a user"
+                      className="w-full"
+                    />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {users.map((user) => (
+                    <SelectItem key={user.id} value={user.id.toString()}>
+                      {user.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
@@ -79,7 +110,9 @@ export function AddTodoFormContent({ onClose }) {
           <Button type="button" variant={"outline"} onClick={onClose}>
             Close
           </Button>
-          <Button type="submit">Add Todo</Button>
+          <Button type="submit" disabled={isPending}>
+            Add Todo
+          </Button>
         </div>
       </form>
     </Form>

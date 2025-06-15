@@ -36,7 +36,7 @@ function RouteComponent() {
 
           <Link
             from={`/todos/${id}`}
-            to={"/"}
+            to={"/todos"}
             className="bg-avocado-400 absolute top-0 right-0 flex aspect-square size-9 cursor-pointer items-center justify-center rounded-full"
           >
             <ChevronLeft />
