@@ -1,5 +1,6 @@
-import { Button } from "@/components/ui/button";
 import { createFileRoute, Link } from "@tanstack/react-router";
+
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -53,8 +54,9 @@ function Index() {
                 <Link to={"https://jsonplaceholder.typicode.com"}>
                   JSONplaceholder
                 </Link>
-              </strong> todos{" "}
-              with <strong>Axios</strong> and <strong>TanStack Query</strong>
+              </strong>{" "}
+              todos with <strong>Axios</strong> and{" "}
+              <strong>TanStack Query</strong>
             </li>
             <li>
               Styling with <strong>Tailwind CSS</strong>

@@ -2,7 +2,13 @@ import { Skeleton } from "../ui/skeleton";
 
 export default function TodoSkeleton() {
   return (
-    <ul className="no-scrollbar mx-auto flex size-full max-w-lg flex-col justify-center divide-y overflow-y-auto py-6">
+    <ul
+      role="status"
+      aria-live="polite"
+      aria-label="Loading todos"
+      className="no-scrollbar mx-auto flex size-full max-w-lg flex-col justify-center divide-y overflow-y-auto py-6"
+    >
+      <span className="sr-only">Loading your todo list...</span>
       {[1, 2, 3, 4, 5, 6, 7].map((item) => (
         <li
           key={item}

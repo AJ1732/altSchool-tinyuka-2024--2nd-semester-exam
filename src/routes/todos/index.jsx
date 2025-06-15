@@ -18,8 +18,6 @@ import { mapStatusValueToCompleted } from "@/utils";
 
 export const Route = createFileRoute("/todos/")({
   loader: ({ context: { queryClient } }) => {
-      // console.log('Context:', context) // Debug what's available
-    console.log('QueryClient:', queryClient) 
     return queryClient.ensureQueryData({
       queryKey: ["users"],
       queryFn: fetchUsers,

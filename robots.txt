@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Allow: /todos/
+
+Disallow: /todos/*?*  # Prevent indexing of filtered/paginated pages
+
+Sitemap: https://1732-todo-app-exam.netlify.app/sitemap.xml
