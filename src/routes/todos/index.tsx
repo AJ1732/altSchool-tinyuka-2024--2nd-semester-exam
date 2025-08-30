@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Plus } from "lucide-react";
 
 import { createFileRoute } from "@tanstack/react-router";
+import { Head } from "@unhead/react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,10 +14,9 @@ import {
 } from "@/components/todos";
 import { useTodos } from "@/config/queries";
 import { fetchUsers } from "@/config/api";
-import { cn } from "@/lib/utils";
-import { mapStatusValueToCompleted } from "@/utils";
 import { useCurrentUrl } from "@/hooks/use-current-url";
-import { Head } from "@unhead/react";
+import { mapStatusValueToCompleted } from "@/utils";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/todos/")({
   loader: ({ context: { queryClient } }) => {
