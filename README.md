@@ -26,6 +26,7 @@ A comprehensive Todo application using React that demonstrates frontend engineer
 
 ### Frontend
 
+- **TypeScript** - A strongly typed superset of JavaScript that compiles to plain JavaScript
 - **React 19** - Modern React with hooks and concurrent features
 - **TanStack Router** - Type-safe file-based routing
 - **TanStack React Query** - Server state management and caching
@@ -88,16 +89,16 @@ src/
 │   ├── todos/           # Todo-specific components
 │   └── ui/              # Base Shadcn UI components (Button, Input, etc.)
 ├── config/
-│   ├── api.js           # API configuration and endpoints
-│   └── queries.js       # React Query hooks and configurations
+│   ├── api.ts           # API configuration and endpoints
+│   └── queries.ts       # React Query hooks and configurations
 ├── hooks/               # Custom React hooks
 ├── lib/
-│   ├── axios.js         # Axios Instance
-│   └── utils.js         # clsx and tailwind-merge utility cn() function
+│   ├── axios.ts         # Axios Instance
+│   └── utils.ts         # clsx and tailwind-merge utility cn() function
 ├── routes/              # File-based routing structure
 ├── utils/               # Helper functions and utilities
 ├── index.css            # Global styles and Tailwind imports
-└── main.jsx            # Application entry point
+└── main.tsx            # Application entry point
 ```
 
 ## 🔌 API Documentation
