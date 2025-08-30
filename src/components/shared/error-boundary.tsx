@@ -2,7 +2,12 @@ import { Link } from "@tanstack/react-router";
 
 import { Button } from "../ui/button";
 
-export default function ErrorBoundary({ error, reset }) {
+interface ErrorBoundaryProps {
+  error?: Error | null;
+  reset: () => void;
+}
+
+export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
   return (
     <div role="alert" className="content-grid mt-4 min-h-[calc(100dvh-4rem)]">
       <section className="overflow-break-word flex size-full flex-col justify-between gap-4 rounded-lg bg-red-50 p-4">

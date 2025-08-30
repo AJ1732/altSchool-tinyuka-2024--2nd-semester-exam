@@ -6,9 +6,14 @@ import axios from "@/lib/axios";
  * @param {boolean | undefined} completed
  * @param {string | undefined} searchTerm
  */
-export const fetchTodos = async (page, limit, completed, searchQuery) => {
+export const fetchTodos = async (
+  page: number,
+  limit: number,
+  searchQuery: string,
+  completed?: boolean,
+) => {
   try {
-    const params = { _page: page, _limit: limit };
+    const params: TodoQueryParams = { _page: page, _limit: limit };
     if (completed !== undefined) params.completed = completed;
     if (searchQuery) params.title_like = searchQuery;
 
@@ -26,7 +31,7 @@ export const fetchTodos = async (page, limit, completed, searchQuery) => {
 /**
  * @param {number | string} id
  */
-export const fetchTodoID = async (id) => {
+export const fetchTodoID = async (id: string) => {
   try {
     const response = await axios.get(`/todos/${id}`);
     return response.data;
@@ -41,7 +46,7 @@ export const fetchTodoID = async (id) => {
  * @param {string} todoData.title
  * @param {number} todoData.userId
  */
-export const addTodo = async ({ title, userId = 1 }) => {
+export const addTodo = async ({ title, userId = 1 }: TodoInput) => {
   try {
     const response = await axios.post("/todos", {
       title,
@@ -56,11 +61,13 @@ export const addTodo = async ({ title, userId = 1 }) => {
 };
 
 /**
- * @param {number | string} id
- * @param {boolean} completed
+ * @param {Object} todoData
+ * @param {number | string} todoData.id
+ * @param {string} todoData.title
+ * @param {boolean} todoData.completed
  */
-export const updateTodo = async ({ id, title, completed }) => {
-  const body = {};
+export const updateTodo = async ({ id, title, completed }: UpdateTodoInput) => {
+  const body: Partial<Todo> = {};
   if (title !== undefined) body.title = title;
   if (completed !== undefined) body.completed = completed;
 
@@ -76,7 +83,7 @@ export const updateTodo = async ({ id, title, completed }) => {
 /**
  * @param {number | string} id
  */
-export const deleteTodo = async (id) => {
+export const deleteTodo = async (id: string) => {
   try {
     const response = await axios.delete(`/todos/${id}`);
     return response.data;
@@ -99,7 +106,7 @@ export const fetchUsers = async () => {
 /**
  * @param {number | string} userId
  */
-export const fetchUserName = async (userId) => {
+export const fetchUserName = async (userId: string) => {
   try {
     const response = await axios.get(`/users/${userId}`);
     return response.data.name;

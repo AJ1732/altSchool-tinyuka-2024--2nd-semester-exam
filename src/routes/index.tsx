@@ -62,7 +62,7 @@ function Index() {
           <h1 className="text-4xl font-black">
             TODO<span className="text-avocado-500">S</span>
           </h1>
-          <p className="text-lg" s>
+          <p className="text-lg">
             A comprehensive Todo application using React that showcases API
             integration, modern patterns, routing, and accessible UI.
           </p>

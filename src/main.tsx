@@ -22,7 +22,7 @@ const router = createRouter({
   },
 });
 
-createRoot(document.getElementById("root")).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <UnheadProvider head={head}>
       <QueryClientProvider client={queryClient}>

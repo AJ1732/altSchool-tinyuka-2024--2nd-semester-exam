@@ -35,7 +35,7 @@ function RouteComponent() {
   const currentUrl = useCurrentUrl();
 
   // STATUS TOGGLE
-  const [statusValue, setStatusValue] = useState("all");
+  const [statusValue, setStatusValue] = useState<TodoStatus>("all");
   const completedParam = mapStatusValueToCompleted(statusValue);
 
   // SEARCH QUERY
@@ -49,14 +49,22 @@ function RouteComponent() {
   const { data, isLoading, error, isFetching } = useTodos(
     page,
     limit,
-    completedParam,
     searchTerm,
+    completedParam,
   );
 
-  if (error) throw new Error(error);
+  // if (error) throw new Error(error);
+  if (error) {
+    if (error instanceof Error) throw error;
+    throw new Error(String(error));
+  }
 
   const todos = data?.todos || [];
   const totalCount = data?.totalCount;
+
+  console.log("Todos", data);
+  console.log("Todos", todos);
+  console.log("Completed", completedParam);
 
   const totalPages = totalCount ? Math.ceil(totalCount / limit) : 1;
 
@@ -133,8 +141,8 @@ function RouteComponent() {
 
           <TodoFilterControls
             value={statusValue}
-            onChange={(newVal) => setStatusValue(newVal)}
-            onSearch={(term) => setSearchTerm(term)}
+            onChange={(newVal: TodoStatus) => setStatusValue(newVal)}
+            onSearch={(term: string) => setSearchTerm(term)}
           />
         </div>
 

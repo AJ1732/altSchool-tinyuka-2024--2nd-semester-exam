@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 
 import { cn } from "@/lib/utils";
 
-export default function BrandMark({ className }) {
+export default function BrandMark({ className }: { className?: string }) {
   return (
     <p className={cn("flex items-center gap-4 text-xs", className)}>
       <i className="font-light">Engineered by</i>

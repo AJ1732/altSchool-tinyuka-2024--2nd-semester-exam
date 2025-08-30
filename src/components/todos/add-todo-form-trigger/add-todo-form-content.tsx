@@ -25,26 +25,26 @@ const FormSchema = z.object({
   title: z.string().min(3, {
     message: "Todo title must be at least 3 characters.",
   }),
-  userId: z.string().min(1, {
+  userId: z.coerce.number().min(1, {
     message: "Please select a user.",
   }),
 });
+type FormValues = z.infer<typeof FormSchema>;
 
-export function AddTodoFormContent({ onClose }) {
+export function AddTodoFormContent({ onClose }: { onClose: () => void }) {
   const { mutate: addTodo, isPending } = useAddTodo();
   const { data: users } = useUsers();
-  console.log("Users:", users);
 
-  const form = useForm({
+  const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
-    defaultValues: { title: "", userId: "" },
+    defaultValues: { title: "", userId: undefined },
     // mode: "onTouched",
     // reValidateMode: "onChange",
   });
 
-  function onSubmit({ title, userId }) {
+  function onSubmit(values: FormValues) {
     addTodo(
-      { title, userId },
+      { ...values },
       {
         onSuccess: () => {
           onClose();
@@ -81,9 +81,8 @@ export function AddTodoFormContent({ onClose }) {
               <FormLabel>Assign To</FormLabel>
               <Select
                 onValueChange={field.onChange}
-                defaultValue={field.value}
+                defaultValue={field.value?.toString()}
                 disabled={isPending}
-                className="w-full"
               >
                 <FormControl>
                   <SelectTrigger>
@@ -94,7 +93,7 @@ export function AddTodoFormContent({ onClose }) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {users.map((user) => (
+                  {users?.map((user) => (
                     <SelectItem key={user.id} value={user.id.toString()}>
                       {user.name}
                     </SelectItem>

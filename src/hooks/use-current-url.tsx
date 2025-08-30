@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useLocation } from "@tanstack/react-router";
 
-export function useCurrentUrl(customUrl) {
+export function useCurrentUrl(customUrl?: string) {
   const location = useLocation();
 
   const [currentUrl, setCurrentUrl] = useState("");

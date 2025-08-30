@@ -16,14 +16,19 @@ import {
  * @param {number} page
  * @param {number} limit
  * @param {boolean | undefined} completed
- * @param {string | undefined} searchTerm
+ * @param {string | undefined} searchQuery
  * @returns {Object} { data: { todos, totalCount }, isLoading, error, isFetching, ... }
  */
-export const useTodos = (page, limit, completed, searchQuery) => {
+export const useTodos = (
+  page: number,
+  limit: number,
+  searchQuery: string,
+  completed?: boolean,
+) => {
   return useQuery({
-    queryKey: ["todos", { page, limit, completed, searchQuery }],
-    queryFn: () => fetchTodos(page, limit, completed, searchQuery),
-    keepPreviousData: true,
+    queryKey: ["todos", { page, limit, searchQuery, completed }],
+    queryFn: () => fetchTodos(page, limit, searchQuery, completed),
+    placeholderData: (previous) => previous,
     staleTime: 1000 * 60 * 5,
   });
 };
@@ -31,7 +36,7 @@ export const useTodos = (page, limit, completed, searchQuery) => {
 /**
  * @param {number | string} todoId
  */
-export const useTodoID = (todoId) => {
+export const useTodoID = (todoId: string) => {
   return useQuery({
     queryKey: ["todo", todoId],
     queryFn: () => fetchTodoID(todoId),
@@ -43,7 +48,7 @@ export const useAddTodo = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (newTodoData) => {
+    mutationFn: async (newTodoData: TodoInput) => {
       toast.promise(addTodo(newTodoData), {
         loading: `Adding new todo...`,
         success: (response) => `Successfully added Todo "${response.title}"!`,
@@ -56,22 +61,23 @@ export const useAddTodo = () => {
       queryClient.setQueryData(["todo", newTodo.id], newTodo);
 
       // Update all todos list caches to include the new todo
-      queryClient.setQueriesData({ queryKey: ["todos"] }, (oldData) => {
-        if (!oldData || !Array.isArray(oldData.todos)) {
-          return oldData;
-        }
-        const updatedTodos = [newTodo, ...oldData.todos];
+      queryClient.setQueriesData<TodosResponse>(
+        { queryKey: ["todos"] },
+        (oldData) => {
+          if (!oldData || !Array.isArray(oldData.todos)) {
+            return oldData;
+          }
+          const updatedTodos = [newTodo, ...oldData.todos];
 
-        return {
-          ...oldData,
-          todos: updatedTodos,
-          totalCount: oldData.totalCount
-            ? oldData.totalCount + 1
-            : oldData.totalCount,
-        };
-      });
-
-      console.log("Added Todo:", newTodo);
+          return {
+            ...oldData,
+            todos: updatedTodos,
+            totalCount: oldData.totalCount
+              ? oldData.totalCount + 1
+              : oldData.totalCount,
+          };
+        },
+      );
     },
     onError: (error) => {
       console.error("Add todo error:", error);
@@ -83,7 +89,7 @@ export const useUpdateTodo = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (updatedData) => {
+    mutationFn: async (updatedData: UpdateTodoInput) => {
       toast.promise(updateTodo(updatedData), {
         loading: `Updating todo ${updatedData.id}...`, // the loading toast laggs
         success: (response) => {
@@ -111,10 +117,10 @@ export const useUpdateTodo = () => {
 };
 
 export const useDeleteTodo = () => {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id }) => {
+    mutationFn: async ({ id }: { id: string }) => {
       toast.promise(deleteTodo(id), {
         loading: `Deleting todo ${id}...`,
         success: () => `You deleted Todo ${id}`,
@@ -123,17 +129,17 @@ export const useDeleteTodo = () => {
       await deleteTodo(id);
       return id;
     },
-    onSuccess: () => {
-      // queryClient.invalidateQueries({ queryKey: ["todos"] });
-    },
     onError: (error) => {
       console.error("Toggle todo status error:", error);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
     },
   });
 };
 
 export const useUsers = () => {
-  return useQuery({
+  return useQuery<User[]>({
     queryKey: ["users"],
     queryFn: fetchUsers,
     staleTime: 1000 * 60 * 5,
@@ -143,7 +149,7 @@ export const useUsers = () => {
 /**
  * @param {number | string} userId
  */
-export const useUserName = (userId) => {
+export const useUserName = (userId: string) => {
   return useQuery({
     queryKey: ["user", userId],
     queryFn: () => fetchUserName(userId),
