@@ -20,7 +20,10 @@ function RouteComponent() {
 
   // Defensive Rendering
   if (todoLoading) return <p>Loading...</p>;
-  if (error) throw new Error(error);
+  if (error) {
+    if (error instanceof Error) throw error;
+    throw new Error(String(error));
+  }
 
   // TODO DATA
   const { id: todoId, title, completed } = todo;
