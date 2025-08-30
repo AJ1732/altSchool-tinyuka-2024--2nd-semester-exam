@@ -42,9 +42,7 @@ function RouteComponent() {
   const [searchTerm, setSearchTerm] = useState("");
 
   // To reset back to page 1 when filter occurs
-  useEffect(() => {
-    setPage(1);
-  }, [statusValue, searchTerm]);
+  useEffect(() => setPage(1), [statusValue, searchTerm]);
 
   const { data, isLoading, error, isFetching } = useTodos(
     page,
@@ -61,11 +59,6 @@ function RouteComponent() {
 
   const todos = data?.todos || [];
   const totalCount = data?.totalCount;
-
-  console.log("Todos", data);
-  console.log("Todos", todos);
-  console.log("Completed", completedParam);
-
   const totalPages = totalCount ? Math.ceil(totalCount / limit) : 1;
 
   // Dynamic page title and description based on current filters
@@ -133,7 +126,7 @@ function RouteComponent() {
           </header>
 
           <AddTodoFormTrigger>
-            <Button className="size-fit gap-1 max-lg:ml-auto max-lg:!px-2">
+            <Button className="size-fit gap-1 !px-6 max-lg:ml-auto max-lg:!px-2">
               <span className="max-lg:sr-only">Add Todo</span>
               <Plus className="size-5" />
             </Button>

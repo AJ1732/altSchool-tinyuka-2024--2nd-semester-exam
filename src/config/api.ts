@@ -83,7 +83,7 @@ export const updateTodo = async ({ id, title, completed }: UpdateTodoInput) => {
 /**
  * @param {number | string} id
  */
-export const deleteTodo = async (id: string) => {
+export const deleteTodo = async (id: number) => {
   try {
     const response = await axios.delete(`/todos/${id}`);
     return response.data;

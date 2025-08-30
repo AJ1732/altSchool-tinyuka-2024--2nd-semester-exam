@@ -6,7 +6,7 @@ export default function TodoSkeleton() {
       role="status"
       aria-live="polite"
       aria-label="Loading todos"
-      className="no-scrollbar mx-auto flex size-full max-w-lg flex-col justify-center divide-y overflow-y-auto py-6"
+      className="no-scrollbar mx-auto flex size-full flex-col justify-center divide-y overflow-y-auto py-6 lg:max-w-lg"
     >
       <span className="sr-only">Loading your todo list...</span>
       {[1, 2, 3, 4, 5, 6, 7].map((item) => (

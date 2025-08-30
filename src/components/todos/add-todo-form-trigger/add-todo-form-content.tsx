@@ -85,11 +85,8 @@ export function AddTodoFormContent({ onClose }: { onClose: () => void }) {
                 disabled={isPending}
               >
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue
-                      placeholder="Select a user"
-                      className="w-full"
-                    />
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a user" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>

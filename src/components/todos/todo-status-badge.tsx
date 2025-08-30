@@ -1,9 +1,12 @@
 import { useState } from "react";
 
-import { useUpdateTodo } from "@/config/queries";
 import { cn } from "@/lib/utils";
+import { useUpdateTodo } from "@/config/queries";
 
-export default function TodoStatusBadge({ id, completed }) {
+export default function TodoStatusBadge({
+  id,
+  completed,
+}: Pick<Todo, "id" | "completed">) {
   const [newCompleted, setNewCompleted] = useState(completed);
   const { mutate: updateTodo, isPending } = useUpdateTodo();
 
@@ -11,7 +14,8 @@ export default function TodoStatusBadge({ id, completed }) {
     updateTodo(
       { id, completed: !newCompleted },
       {
-        onSuccess: (updatedTodo) => setNewCompleted(updatedTodo.completed),
+        onSuccess: (updatedTodo: Todo) =>
+          setNewCompleted(updatedTodo.completed),
       },
     );
   };

@@ -21,13 +21,15 @@ const TitleSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters."),
 });
 
-export default function TodoIDTitle({ id, title }) {
+type TitleValue = z.infer<typeof TitleSchema>;
+
+export default function TodoIDTitle({ id, title }: Pick<Todo, "id" | "title">) {
   const [titleState, setTitleState] = useState(title);
   const [isEditable, setIsEditable] = useState(false);
 
   const { mutate: updateTodo, isPending } = useUpdateTodo();
 
-  const form = useForm({
+  const form = useForm<TitleValue>({
     resolver: zodResolver(TitleSchema),
     defaultValues: {
       title: titleState,
@@ -41,12 +43,12 @@ export default function TodoIDTitle({ id, title }) {
   }, [isEditable, form, titleState]);
 
   // TITLE UPDATE
-  const onSubmit = (data) => {
+  const onSubmit = (data: TitleValue) => {
     const newTitle = data.title.trim();
     updateTodo(
       { id, title: newTitle },
       {
-        onSuccess: (updatedTodo) => {
+        onSuccess: (updatedTodo: Todo) => {
           setTitleState(updatedTodo.title);
           setIsEditable(false);
           form.reset({ title: updatedTodo.title });

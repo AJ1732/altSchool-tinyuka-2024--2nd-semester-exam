@@ -1,11 +1,19 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import type { Dispatch, SetStateAction } from "react";
+
+interface TodoPaginationProps {
+  page: number;
+  totalPages: number;
+  setPage: Dispatch<SetStateAction<number>>;
+  isFetching: boolean;
+}
 
 export default function TodoPagination({
   page,
   totalPages,
   setPage,
   isFetching,
-}) {
+}: TodoPaginationProps) {
   return (
     <div className="mx-auto mt-auto flex h-fit w-full max-w-[calc(100%-6rem)] justify-between rounded-full border bg-zinc-100/90 p-4 py-2 backdrop-blur-sm lg:absolute lg:bottom-6 lg:left-6 lg:max-w-80">
       <button

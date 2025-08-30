@@ -8,13 +8,21 @@ const STATUS_OPTIONS = [
   { value: "incomplete", label: "Incomplete" },
 ];
 
-export function StatusTodoToggleGroup({ value, onChange }) {
-  const handleValueChange = (newValue) => {
+interface StatusTodoToggleGroupProps {
+  value: TodoStatus;
+  onChange: (newValue: TodoStatus) => void;
+}
+
+export function StatusTodoToggleGroup({
+  value,
+  onChange,
+}: StatusTodoToggleGroupProps) {
+  const handleValueChange = (newValue: TodoStatus) => {
     if (!newValue) return;
     if (typeof onChange === "function") {
       onChange(newValue);
     }
-    toast(`Showing ${newValue.toUppercase()} todos`);
+    toast(`Showing ${newValue.toUpperCase()} todos`);
   };
 
   return (

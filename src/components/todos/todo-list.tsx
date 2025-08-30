@@ -1,6 +1,6 @@
 import { TodoCard } from "@/components/todos";
 
-export default function TodoList({ todos }) {
+export default function TodoList({ todos }: { todos: Todo[] }) {
   if (!todos) throw new Error("No Todo present");
 
   return (

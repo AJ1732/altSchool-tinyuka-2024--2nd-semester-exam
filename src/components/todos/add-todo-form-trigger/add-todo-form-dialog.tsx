@@ -11,7 +11,7 @@ import {
 
 import { AddTodoFormContent } from "./add-todo-form-content";
 
-export function AddTodoFormDialog({ children }) {
+export function AddTodoFormDialog({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
 
   return (

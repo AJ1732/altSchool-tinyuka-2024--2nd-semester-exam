@@ -120,7 +120,7 @@ export const useDeleteTodo = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id }: { id: string }) => {
+    mutationFn: async ({ id }: { id: number }) => {
       toast.promise(deleteTodo(id), {
         loading: `Deleting todo ${id}...`,
         success: () => `You deleted Todo ${id}`,

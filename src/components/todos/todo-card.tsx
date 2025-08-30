@@ -1,4 +1,5 @@
 import { Trash2 } from "lucide-react";
+import { useState } from "react";
 
 import { Link } from "@tanstack/react-router";
 
@@ -6,7 +7,6 @@ import { useDeleteTodo, useUpdateTodo, useUserName } from "@/config/queries";
 import { cn } from "@/lib/utils";
 
 import { Checkbox } from "../ui/checkbox";
-import { useState } from "react";
 
 export default function TodoCard({
   id = 1,
@@ -31,7 +31,7 @@ export default function TodoCard({
 
   return (
     <li className="hover:bg-avocado-200/50 group relative flex items-center border-b border-neutral-300/80 last:border-b-0 last:[&>*]:border-b-0">
-      <div className="mx-auto grid w-full grid-cols-[1.25rem_minmax(10rem,_1fr)_1.125rem] items-center gap-y-4 px-2 py-4 md:max-w-xl lg:grid-cols-[1.25rem_minmax(15rem,_1fr)_minmax(8rem,_12rem)_2rem] lg:gap-x-4 lg:pl-4">
+      <div className="mx-auto grid w-full grid-cols-[1.25rem_minmax(10rem,_1fr)_1.125rem] items-center gap-y-4 px-2 py-4 lg:max-w-xl lg:grid-cols-[1.25rem_minmax(15rem,_1fr)_minmax(8rem,_12rem)_2rem] lg:gap-x-4 lg:pl-4">
         <Checkbox
           checked={newCompleted}
           onCheckedChange={handleToggle}
