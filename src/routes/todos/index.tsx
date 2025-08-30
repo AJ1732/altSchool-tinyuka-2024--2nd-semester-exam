@@ -126,7 +126,7 @@ function RouteComponent() {
           </header>
 
           <AddTodoFormTrigger>
-            <Button className="size-fit gap-1 !px-6 max-lg:ml-auto max-lg:!px-2">
+            <Button className="size-fit gap-1 !pr-4 !pl-5 max-lg:ml-auto max-lg:!px-2">
               <span className="max-lg:sr-only">Add Todo</span>
               <Plus className="size-5" />
             </Button>
