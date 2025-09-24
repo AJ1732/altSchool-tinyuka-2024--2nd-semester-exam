@@ -1,0 +1,34 @@
+import { Skeleton } from "@/components/ui/skeleton";
+
+export function TodoSkeleton() {
+  return (
+    <ul
+      role="status"
+      aria-live="polite"
+      aria-label="Loading todos"
+      className="no-scrollbar mx-auto flex size-full flex-col justify-center divide-y overflow-y-auto py-6 lg:max-w-lg"
+    >
+      <span className="sr-only">Loading your todo list...</span>
+      {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+        <li
+          key={item}
+          className="grid grid-cols-[1.25rem_minmax(10rem,_1fr)_1.125rem] items-center gap-x-4 gap-y-2 px-2 py-5 lg:grid-cols-[1.25rem_minmax(15rem,_1fr)_minmax(8rem,_12rem)_2rem]"
+        >
+          <Skeleton className={"size-5 bg-neutral-200 max-lg:-mb-1"} />
+          <Skeleton className={"h-[1.125rem] bg-neutral-200"} />
+          <Skeleton
+            className={
+              "h-4 bg-neutral-200 max-lg:col-start-2 max-lg:row-start-2"
+            }
+          />
+          <Skeleton className={"h-4 bg-neutral-200"} />
+          <Skeleton
+            className={
+              "ml-px size-4 bg-neutral-200 max-lg:col-start-3 lg:hidden"
+            }
+          />
+        </li>
+      ))}
+    </ul>
+  );
+}

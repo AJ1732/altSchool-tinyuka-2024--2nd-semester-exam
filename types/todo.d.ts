@@ -1,8 +1,9 @@
 type Todo = {
   id: number;
-  userId: string;
   title: string;
+  description: string;
   completed: boolean;
+  created_at: string;
 };
 
 type TodosResponse = {
@@ -12,18 +13,4 @@ type TodosResponse = {
 
 type TodoStatus = "complete" | "incomplete" | "all";
 
-type TodoInput = {
-  title: string;
-  userId: number;
-};
-
-type UpdateTodoInput = Partial<Pick<Todo, "title" | "completed">> & {
-  id: number;
-};
-
-interface TodoQueryParams {
-  _page: number;
-  _limit: number;
-  completed?: boolean;
-  title_like?: string;
-}
+type TodoInput = Partial<Pick<Todo, "title" | "description">>;

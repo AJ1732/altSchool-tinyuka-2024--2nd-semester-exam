@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Contrail_One } from "next/font/google";
 
+import { Toaster } from "@/components/ui/sonner";
 import { Footer } from "@/layout/footer";
+import { Providers } from "@/providers";
 import "./globals.css";
 
 const contrailOne = Contrail_One({
@@ -70,13 +72,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${contrailOne.variable} antialiased`}>
-        <main className="content-grid mt-4 min-h-[calc(100dvh-4rem)]">
-          <div className="bg-neutral-background/60 border size-full rounded-lg p-4">
-            {children}
-          </div>
-        </main>
+        <Providers>
+          <main className="content-grid mt-4 min-h-[calc(100dvh-4rem)]">
+            <div className="bg-neutral-background/60 size-full rounded-lg border p-4">
+              {children}
+            </div>
+          </main>
 
-        <Footer />
+          <Footer />
+        </Providers>
+        <Toaster closeButton />
       </body>
     </html>
   );
