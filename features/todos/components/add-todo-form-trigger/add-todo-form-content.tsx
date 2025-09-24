@@ -73,7 +73,11 @@ export function AddTodoFormContent({ onClose }: { onClose: () => void }) {
             <FormItem>
               <FormLabel>Todo Description</FormLabel>
               <FormControl>
-                <Textarea placeholder="" {...field} />
+                <Textarea
+                  placeholder="Describe what needs to be done"
+                  {...field}
+                  className="min-h-40"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

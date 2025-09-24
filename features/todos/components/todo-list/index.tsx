@@ -8,10 +8,6 @@ import { TodoSkeleton } from "./todo-skeleton";
 export default function TodoList() {
   const { data: todos, isLoading } = useTodos();
 
-  if (isLoading) {
-    return <TodoSkeleton />;
-  }
-
   return (
     <section
       className={cn(
@@ -19,11 +15,15 @@ export default function TodoList() {
         !isLoading && "lg:place-content-center",
       )}
     >
-      <ul className="no-scrollbar y-gradient size-full max-h-[calc(100svh-8rem)] overflow-y-auto pb-4 max-lg:mb-4 max-lg:pt-0 lg:max-h-[calc(100svh-8rem)] lg:py-4">
-        {todos?.map((todo) => (
-          <TodoCard key={todo.id} {...todo} />
-        ))}
-      </ul>
+      {isLoading ? (
+        <TodoSkeleton />
+      ) : (
+        <ul className="no-scrollbar y-gradient size-full max-h-[calc(100svh-8rem)] overflow-y-auto pb-4 max-lg:mb-4 max-lg:pt-0 lg:max-h-[calc(100svh-8rem)] lg:py-4">
+          {todos?.map((todo) => (
+            <TodoCard key={todo.id} {...todo} />
+          ))}
+        </ul>
+      )}
     </section>
   );
 }
