@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Github } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { ErrorTrigger } from "@/components/elements";
 
 export default function Home() {
   return (

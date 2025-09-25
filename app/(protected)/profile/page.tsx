@@ -1,11 +1,10 @@
 "use client";
+import { Check, User, Mail, Shield, Key, Clock } from "lucide-react";
 
-import { useAuth } from "@/features/auth/context";
-import { Check, User, Mail, Calendar, Shield, Key, Clock } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useAuth } from "@/features/auth/context";
 import { formatDate, getTimeSince } from "@/utils/date";
 import { cn } from "@/lib/utils";
 
