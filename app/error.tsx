@@ -10,7 +10,7 @@ interface ErrorBoundaryProps {
 
 export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
   return (
-    <div role="alert" className="content-grid mt-4 min-h-[calc(100dvh-4rem)]">
+    <div role="alert" className="-m-4 h-full min-h-[calc(100dvh-4rem)]">
       <section className="overflow-break-word flex size-full flex-col justify-between gap-4 rounded-lg bg-red-50 p-4">
         <h2 className="text-xl leading-[150%] md:text-2xl lg:text-3xl">
           Something went wrong

@@ -20,7 +20,7 @@ export default function Home() {
             <Link href="/todos">View Todos</Link>
           </Button>
           <Button size={"lg"} asChild variant={"outline"}>
-            <Link href="/error">Test Error Page</Link>
+            <Link href="/error-test">Test Error Page</Link>
           </Button>
           <Button size={"lg"} asChild variant={"destructive"}>
             <Link href="/alt">Test Not Found Page</Link>
@@ -43,14 +43,11 @@ export default function Home() {
               UI Library <strong>Shadcn UI</strong> to speed up development
             </li>
             <li>
-              Database integration with supabase
+              Database integration with{" "}
               <strong>
-                <Link href={"https://jsonplaceholder.typicode.com"}>
-                  JSONplaceholder
-                </Link>
+                <Link href={"https://supabase.com/"}>Supabase</Link>
               </strong>{" "}
-              todos with <strong>Axios</strong> and{" "}
-              <strong>TanStack Query</strong>
+              and <strong>TanStack Query</strong>
             </li>
             <li>
               Styling with <strong>Tailwind CSS</strong>
