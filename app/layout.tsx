@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Contrail_One } from "next/font/google";
 
+import { BackButton } from "@/components/elements";
 import { Toaster } from "@/components/ui/sonner";
 import { Footer } from "@/layout/footer";
 import { Providers } from "@/providers";
@@ -73,6 +74,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${contrailOne.variable} antialiased`}>
         <Providers>
+          <BackButton />
           <main className="content-grid mt-4 min-h-[calc(100dvh-4rem)]">
             <div className="bg-neutral-background/60 size-full rounded-lg border p-4">
               {children}

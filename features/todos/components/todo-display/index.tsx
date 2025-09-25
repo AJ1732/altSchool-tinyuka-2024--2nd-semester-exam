@@ -31,7 +31,10 @@ export default function TodoDisplay({ id }: TodoDisplayProps) {
             <TodoIDTitle {...{ id, todo, title }} />
 
             <p className="mt-2 flex items-center gap-2 text-sm font-extralight first-letter:capitalize sm:text-base md:text-2xl lg:mt-1">
-              <div aria-hidden className="bg-avocado-600 size-2 rounded-full" />
+              <span
+                aria-hidden
+                className="bg-avocado-600 size-2 rounded-full"
+              />
               {description}
             </p>
 
