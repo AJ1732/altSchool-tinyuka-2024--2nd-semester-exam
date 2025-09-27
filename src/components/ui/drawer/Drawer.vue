@@ -1,16 +1,19 @@
 <script lang="ts" setup>
-import type { DrawerRootEmits, DrawerRootProps } from "vaul-vue"
-import { useForwardPropsEmits } from "reka-ui"
-import { DrawerRoot } from "vaul-vue"
+import type { DrawerRootEmits, DrawerRootProps } from "vaul-vue";
+import { useForwardPropsEmits } from "reka-ui";
+import { DrawerRoot } from "vaul-vue";
 
-const props = withDefaults(defineProps<DrawerRootProps>(), {
-  shouldScaleBackground: true,
-})
+const rawProps = defineProps<DrawerRootProps>();
+const props = withDefaults(rawProps, { shouldScaleBackground: true });
 
-const emits = defineEmits<DrawerRootEmits>()
+const emits = defineEmits<DrawerRootEmits>();
 
-const forwarded = useForwardPropsEmits(props, emits)
+// Extract keys from the emits interface as a string union
+type DrawerEmitNames = Extract<keyof DrawerRootEmits, string>;
+
+const forwarded = useForwardPropsEmits<DrawerRootProps, DrawerEmitNames>(props, emits);
 </script>
+
 
 <template>
   <DrawerRoot
