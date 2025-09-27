@@ -6,15 +6,15 @@ import { Button } from '@/components/ui/button'
 </script>
 
 <template>
-  <main className="flex h-full flex-col items-center justify-center space-y-8 text-neutral-800">
+  <main class="flex h-full flex-col items-center justify-center space-y-8 text-neutral-800">
     <!-- Hero Section -->
-    <header className="max-w-xl space-y-4">
-      <h1 className="text-4xl font-black">TODO<span className="text-avocado-500">S</span></h1>
-      <p className="text-lg">
+    <header class="max-w-xl space-y-4">
+      <h1 class="text-4xl font-black">TODO<span class="text-avocado-500">S</span></h1>
+      <p class="text-lg">
         A comprehensive Todo application using React that showcases API integration, modern
         patterns, routing, and accessible UI.
       </p>
-      <div className="flex flex-wrap gap-4">
+      <div class="flex flex-wrap gap-4">
         <Button size="lg" asChild>
           <RouterLink to="/todos">View Todos</RouterLink>
         </Button>
@@ -28,10 +28,10 @@ import { Button } from '@/components/ui/button'
     </header>
 
     <!-- Technical Requirements -->
-    <section aria-labelledby="tech-req-heading" className="w-full max-w-xl space-y-4">
-      <article className="space-y-3">
-        <h3 className="text-xl font-medium">Core Technologies</h3>
-        <ul className="list-inside list-disc space-y-1">
+    <section aria-labelledby="tech-req-heading" class="w-full max-w-xl space-y-4">
+      <article class="space-y-3">
+        <h3 class="text-xl font-medium">Core Technologies</h3>
+        <ul class="list-inside list-disc space-y-1">
           <li><strong>React 19+</strong> with functional components and hooks</li>
           <li>UI Library <strong>Shadcn UI</strong> to speed up development</li>
           <li><strong>TanStack Router</strong> for routing/navigation</li>
@@ -50,7 +50,7 @@ import { Button } from '@/components/ui/button'
     </section>
 
     <section>
-      <Button className="w-fit">
+      <Button class="w-fit">
         <a
           href="https://github.com/AJ1732/altSchool-tinyuka-2024--2nd-semester-exam/tree/vuejs"
           target="_blank"

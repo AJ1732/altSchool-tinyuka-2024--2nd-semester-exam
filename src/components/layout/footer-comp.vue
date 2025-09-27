@@ -4,10 +4,10 @@ import { BrandMark } from '../elements'
 </script>
 
 <template>
-  <footer className="content-grid h-12">
-    <section className="flex items-center justify-between gap-4 px-2">
-      <RouterLink to="/" className="text-sm font-outfit font-black">
-        TODO<span className="text-avocado-500">S</span>
+  <footer class="content-grid h-12">
+    <section class="flex items-center justify-between gap-4 px-2">
+      <RouterLink to="/" class="font-outfit text-sm font-black">
+        <span> TODO<span class="text-avocado-500">S</span> </span>
       </RouterLink>
       <BrandMark />
     </section>
