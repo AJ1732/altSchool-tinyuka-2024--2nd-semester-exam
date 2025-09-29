@@ -17,6 +17,22 @@ const router = createRouter({
       path: '/todos/:id',
       name: 'todo',
       component: () => import('../views/todo-id-view.vue'),
+      props: true,
+    },
+    {
+      path: '/signin',
+      name: 'signin',
+      component: () => import('../views/signin-view.vue'),
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: () => import('../views/signup-view.vue'),
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('../views/not-found-view.vue'),
     },
   ],
 })
