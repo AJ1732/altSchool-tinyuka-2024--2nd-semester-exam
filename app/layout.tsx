@@ -4,7 +4,9 @@ import { Contrail_One } from "next/font/google";
 import { BackButton } from "@/components/elements";
 import { Toaster } from "@/components/ui/sonner";
 import { Footer } from "@/layout/footer";
+import { MainOutlet } from "@/layout/main-outlet";
 import { Providers } from "@/providers";
+
 import "./globals.css";
 
 const contrailOne = Contrail_One({
@@ -65,7 +67,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -75,12 +77,7 @@ export default function RootLayout({
       <body className={`${contrailOne.variable} antialiased`}>
         <Providers>
           <BackButton />
-          <main className="content-grid mt-4 min-h-[calc(100dvh-4rem)]">
-            <div className="bg-neutral-background/60 size-full rounded-lg border p-4">
-              {children}
-            </div>
-          </main>
-
+          <MainOutlet>{children}</MainOutlet>
           <Footer />
         </Providers>
         <Toaster closeButton />

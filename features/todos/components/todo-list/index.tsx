@@ -11,7 +11,7 @@ export default function TodoList() {
   return (
     <section
       className={cn(
-        "grid h-full max-h-[calc(100svh-9.5rem)] px-6 max-lg:px-0 md:max-h-[calc(100svh-12rem)] lg:min-h-[calc(100svh-6rem)]",
+        "grid h-full max-h-[calc(100svh-9.5rem)] px-6 max-lg:px-0 md:max-h-[calc(100svh-12rem)] lg:min-h-[calc(100svh-9.25rem)]",
         !isLoading && "lg:place-content-center",
       )}
     >
